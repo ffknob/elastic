@@ -1,0 +1,673 @@
+DELETE /jurisprudencia-sumulas/
+DELETE /jurisprudencia-pareceres/
+DELETE /jurisprudencia-informacoes_ct/
+DELETE /jurisprudencia-decisoes/
+
+PUT /jurisprudencia-sumulas/
+{
+  "mappings": {
+    "default": {
+      "dynamic": false,
+      "properties": {
+        "@timestamp": {
+          "type": "date"
+        },
+        "@version": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "ano_boletim": {
+          "type": "integer"
+        },
+        "ano_legislacao": {
+          "type": "integer"
+        },
+        "ano_sessao": {
+          "type": "integer"
+        },
+        "cd_legislacao": {
+          "type": "integer"
+        },
+        "cd_orgao": {
+          "type": "integer"
+        },
+        "cd_tipo_legislacao": {
+          "type": "integer"
+        },
+        "desc_mes": {
+          "type": "keyword"
+        },
+        "ds_legislacao": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "ds_tipo_legislacao": {
+          "type": "keyword"
+        },
+        "dt_ato": {
+          "type": "date"
+        },
+        "dt_disponibilizacao": {
+          "type": "date"
+        },
+        "dt_publicacao": {
+          "type": "date"
+        },
+        "ementa": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "id_elastic_search": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "natureza_legislacao": {
+          "type": "keyword"
+        },
+        "nm_magistrado": {
+          "type": "keyword"
+        },
+        "nm_orgao": {
+          "type": "keyword"
+        },
+        "nm_orgao_processo": {
+          "type": "keyword"
+        },
+        "nome_arquivo": {
+          "type": "keyword"
+        },
+        "notas": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nr_ano_legislacao": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nr_boletim": {
+          "type": "integer"
+        },
+        "nr_legislacao": {
+          "type": "integer"
+        },
+        "nr_processo": {
+          "type": "integer"
+        },
+        "nr_processo_fmt": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nr_sessao": {
+          "type": "integer"
+        },
+        "orgao_julgador": {
+          "type": "keyword"
+        },
+        "pg_disponibilizacao": {
+          "type": "integer"
+        },
+        "pg_fonte": {
+          "type": "integer"
+        },
+        "publicidade": {
+          "type": "keyword"
+        },
+        "sit_leg": {
+          "type": "keyword"
+        },
+        "situacao": {
+          "type": "keyword"
+        },
+        "status_norma": {
+          "type": "keyword"
+        },
+        "tp_fonte": {
+          "type": "keyword"
+        },
+        "ultima_decisao": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+PUT /jurisprudencia-pareceres/
+{
+  "mappings": {
+    "default": {
+      "dynamic": false,
+      "properties": {
+        "@timestamp": {
+          "type": "date"
+        },
+        "@version": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "ano_boletim": {
+          "type": "integer"
+        },
+        "ano_legislacao": {
+          "type": "integer"
+        },
+        "ano_sessao": {
+          "type": "integer"
+        },
+        "cd_legislacao": {
+          "type": "integer"
+        },
+        "cd_orgao": {
+          "type": "integer"
+        },
+        "cd_tipo_legislacao": {
+          "type": "integer"
+        },
+        "desc_mes": {
+          "type": "keyword"
+        },
+        "ds_legislacao": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "ds_tipo_legislacao": {
+          "type": "keyword"
+        },
+        "dt_ato": {
+          "type": "date"
+        },
+        "dt_disponibilizacao": {
+          "type": "date"
+        },
+        "dt_publicacao": {
+          "type": "date"
+        },
+        "ementa": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "id_elastic_search": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "natureza_legislacao": {
+          "type": "keyword"
+        },
+        "nm_magistrado": {
+          "type": "keyword"
+        },
+        "nm_orgao": {
+          "type": "keyword"
+        },
+        "nm_orgao_processo": {
+          "type": "keyword"
+        },
+        "nome_arquivo": {
+          "type": "keyword"
+        },
+        "notas": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nr_ano_legislacao": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nr_boletim": {
+          "type": "integer"
+        },
+        "nr_legislacao": {
+          "type": "integer"
+        },
+        "nr_processo": {
+          "type": "integer"
+        },
+        "nr_processo_fmt": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nr_sessao": {
+          "type": "integer"
+        },
+        "orgao_julgador": {
+          "type": "keyword"
+        },
+        "pg_disponibilizacao": {
+          "type": "integer"
+        },
+        "pg_fonte": {
+          "type": "integer"
+        },
+        "publicidade": {
+          "type": "keyword"
+        },
+        "sit_leg": {
+          "type": "keyword"
+        },
+        "situacao": {
+          "type": "keyword"
+        },
+        "status_norma": {
+          "type": "keyword"
+        },
+        "tp_fonte": {
+          "type": "keyword"
+        },
+        "ultima_decisao": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+PUT /jurisprudencia-informacoes_ct/
+{
+  "mappings": {
+    "default": {
+      "dynamic": false,
+      "properties": {
+        "@timestamp": {
+          "type": "date"
+        },
+        "@version": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "ano_boletim": {
+          "type": "integer"
+        },
+        "ano_legislacao": {
+          "type": "integer"
+        },
+        "ano_sessao": {
+          "type": "integer"
+        },
+        "cd_legislacao": {
+          "type": "integer"
+        },
+        "cd_orgao": {
+          "type": "integer"
+        },
+        "cd_tipo_legislacao": {
+          "type": "integer"
+        },
+        "desc_mes": {
+          "type": "keyword"
+        },
+        "ds_legislacao": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "ds_tipo_legislacao": {
+          "type": "keyword"
+        },
+        "dt_ato": {
+          "type": "date"
+        },
+        "dt_disponibilizacao": {
+          "type": "date"
+        },
+        "dt_publicacao": {
+          "type": "date"
+        },
+        "ementa": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "id_elastic_search": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "natureza_legislacao": {
+          "type": "keyword"
+        },
+        "nm_magistrado": {
+          "type": "keyword"
+        },
+        "nm_orgao": {
+          "type": "keyword"
+        },
+        "nm_orgao_processo": {
+          "type": "keyword"
+        },
+        "nome_arquivo": {
+          "type": "keyword"
+        },
+        "notas": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nr_ano_legislacao": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nr_boletim": {
+          "type": "integer"
+        },
+        "nr_legislacao": {
+          "type": "integer"
+        },
+        "nr_processo": {
+          "type": "integer"
+        },
+        "nr_processo_fmt": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nr_sessao": {
+          "type": "integer"
+        },
+        "orgao_julgador": {
+          "type": "keyword"
+        },
+        "pg_disponibilizacao": {
+          "type": "integer"
+        },
+        "pg_fonte": {
+          "type": "integer"
+        },
+        "publicidade": {
+          "type": "keyword"
+        },
+        "sit_leg": {
+          "type": "keyword"
+        },
+        "situacao": {
+          "type": "keyword"
+        },
+        "status_norma": {
+          "type": "keyword"
+        },
+        "tp_fonte": {
+          "type": "keyword"
+        },
+        "ultima_decisao": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+PUT /jurisprudencia-decisoes/
+{
+  "mappings": {
+    "default": {
+      "dynamic": false,
+      "properties": {
+        "@timestamp": {
+          "type": "date"
+        },
+        "@version": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "ano_processo_ordem": {
+          "type": "integer"
+        },
+        "ano_sessao": {
+          "type": "integer"
+        },
+        "cd_cargo": {
+          "type": "integer"
+        },
+        "cd_gabinete": {
+          "type": "integer"
+        },
+        "cd_magistrado": {
+          "type": "integer"
+        },
+        "cd_orgao_julgador": {
+          "type": "integer"
+        },
+        "dec_descricao": {
+          "type": "text"
+        },
+        "devolucao_vistas": {
+          "type": "keyword"
+        },
+        "ds_tp_processo": {
+          "type": "keyword"
+        },
+        "dt_inicio_exercicio": {
+          "type": "date"
+        },
+        "dt_sessao": {
+          "type": "date"
+        },
+        "eh_processo_eletronico": {
+          "type": "keyword"
+        },
+        "id_elasticsearch": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "instrucao": {
+          "type": "text"
+        },
+        "link_video_sessao": {
+          "type": "text"
+        },
+        "nm_gabinete": {
+          "type": "keyword"
+        },
+        "nm_magistrado": {
+          "type": "keyword"
+        },
+        "nm_orgao_julgador": {
+          "type": "keyword"
+        },
+        "novaref": {
+          "type": "text"
+        },
+        "nr_processo": {
+          "type": "integer"
+        },
+        "nr_processo_fmt": {
+          "type": "text"
+        },
+        "nr_processo_ordem": {
+          "type": "text"
+        },
+        "nr_processo_referido": {
+          "type": "integer"
+        },
+        "nr_processo_referido_fmt": {
+          "type": "text"
+        },
+        "nr_sessao": {
+          "type": "integer"
+        },
+        "orgao": {
+          "type": "keyword"
+        },
+        "precede": {
+          "type": "text"
+        },
+        "publicacao_ano_boletim": {
+          "type": "integer"
+        },
+        "publicacao_dt_publicacao": {
+          "type": "date"
+        },
+        "publicacao_nr_boletim": {
+          "type": "integer"
+        },
+        "refleg": {
+          "type": "text"
+        },
+        "relatorio": {
+          "type": "text"
+        },
+        "retirado_pauta": {
+          "type": "keyword"
+        },
+        "sessao_ano_boletim": {
+          "type": "integer"
+        },
+        "sessao_dt_publicacao": {
+          "type": "date"
+        },
+        "sessao_nr_boletim": {
+          "type": "integer"
+        },
+        "sol_vista": {
+          "type": "keyword"
+        },
+        "sucede": {
+          "type": "text"
+        },
+        "susp_julgamento": {
+          "type": "keyword"
+        },
+        "texto": {
+          "type": "text"
+        },
+        "texto_ementa": {
+          "type": "text"
+        },
+        "tp_processo": {
+          "type": "keyword"
+        },
+        "voto_desempate": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}
