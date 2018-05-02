@@ -37,10 +37,22 @@ PUT /jurisprudencia-sumulas/
           "type": "integer"
         },
         "cd_tipo_legislacao": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "desc_mes": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "ds_legislacao": {
           "type": "text",
@@ -52,7 +64,13 @@ PUT /jurisprudencia-sumulas/
           }
         },
         "ds_tipo_legislacao": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "dt_ato": {
           "type": "date",
@@ -67,13 +85,7 @@ PUT /jurisprudencia-sumulas/
           "format": "dd/MM/yyyy"
         },
         "ementa": {
-          "type": "text",
-          "fields": {
-            "keyword": {
-              "type": "keyword",
-              "ignore_above": 256
-            }
-          }
+          "type": "text"
         },
         "id_elastic_search": {
           "type": "text",
@@ -85,21 +97,6 @@ PUT /jurisprudencia-sumulas/
           }
         },
         "natureza_legislacao": {
-          "type": "keyword"
-        },
-        "nm_magistrado": {
-          "type": "keyword"
-        },
-        "nm_orgao": {
-          "type": "keyword"
-        },
-        "nm_orgao_processo": {
-          "type": "keyword"
-        },
-        "nome_arquivo": {
-          "type": "keyword"
-        },
-        "notas": {
           "type": "text",
           "fields": {
             "keyword": {
@@ -107,6 +104,45 @@ PUT /jurisprudencia-sumulas/
               "ignore_above": 256
             }
           }
+        },
+        "nm_magistrado": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nm_orgao": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nm_orgao_processo": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nome_arquivo": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "notas": {
+          "type": "text"
         },
         "nr_ano_legislacao": {
           "type": "text",
@@ -139,7 +175,13 @@ PUT /jurisprudencia-sumulas/
           "type": "integer"
         },
         "orgao_julgador": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "pg_disponibilizacao": {
           "type": "integer"
@@ -148,19 +190,49 @@ PUT /jurisprudencia-sumulas/
           "type": "integer"
         },
         "publicidade": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "sit_leg": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "situacao": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "status_norma": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "tp_fonte": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "ultima_decisao": {
           "type": "text",
@@ -210,10 +282,22 @@ PUT /jurisprudencia-pareceres/
           "type": "integer"
         },
         "cd_tipo_legislacao": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "desc_mes": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "ds_legislacao": {
           "type": "text",
@@ -225,7 +309,13 @@ PUT /jurisprudencia-pareceres/
           }
         },
         "ds_tipo_legislacao": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "dt_ato": {
           "type": "date",
@@ -240,13 +330,7 @@ PUT /jurisprudencia-pareceres/
           "format": "dd/MM/yyyy"
         },
         "ementa": {
-          "type": "text",
-          "fields": {
-            "keyword": {
-              "type": "keyword",
-              "ignore_above": 256
-            }
-          }
+          "type": "text"
         },
         "id_elastic_search": {
           "type": "text",
@@ -258,21 +342,6 @@ PUT /jurisprudencia-pareceres/
           }
         },
         "natureza_legislacao": {
-          "type": "keyword"
-        },
-        "nm_magistrado": {
-          "type": "keyword"
-        },
-        "nm_orgao": {
-          "type": "keyword"
-        },
-        "nm_orgao_processo": {
-          "type": "keyword"
-        },
-        "nome_arquivo": {
-          "type": "keyword"
-        },
-        "notas": {
           "type": "text",
           "fields": {
             "keyword": {
@@ -280,6 +349,45 @@ PUT /jurisprudencia-pareceres/
               "ignore_above": 256
             }
           }
+        },
+        "nm_magistrado": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nm_orgao": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nm_orgao_processo": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nome_arquivo": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "notas": {
+          "type": "text"
         },
         "nr_ano_legislacao": {
           "type": "text",
@@ -312,7 +420,13 @@ PUT /jurisprudencia-pareceres/
           "type": "integer"
         },
         "orgao_julgador": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "pg_disponibilizacao": {
           "type": "integer"
@@ -321,19 +435,49 @@ PUT /jurisprudencia-pareceres/
           "type": "integer"
         },
         "publicidade": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "sit_leg": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "situacao": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "status_norma": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "tp_fonte": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "ultima_decisao": {
           "type": "text",
@@ -383,10 +527,22 @@ PUT /jurisprudencia-informacoes_ct/
           "type": "integer"
         },
         "cd_tipo_legislacao": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "desc_mes": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "ds_legislacao": {
           "type": "text",
@@ -398,7 +554,13 @@ PUT /jurisprudencia-informacoes_ct/
           }
         },
         "ds_tipo_legislacao": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "dt_ato": {
           "type": "date",
@@ -413,13 +575,7 @@ PUT /jurisprudencia-informacoes_ct/
           "format": "dd/MM/yyyy"
         },
         "ementa": {
-          "type": "text",
-          "fields": {
-            "keyword": {
-              "type": "keyword",
-              "ignore_above": 256
-            }
-          }
+          "type": "text"
         },
         "id_elastic_search": {
           "type": "text",
@@ -431,21 +587,6 @@ PUT /jurisprudencia-informacoes_ct/
           }
         },
         "natureza_legislacao": {
-          "type": "keyword"
-        },
-        "nm_magistrado": {
-          "type": "keyword"
-        },
-        "nm_orgao": {
-          "type": "keyword"
-        },
-        "nm_orgao_processo": {
-          "type": "keyword"
-        },
-        "nome_arquivo": {
-          "type": "keyword"
-        },
-        "notas": {
           "type": "text",
           "fields": {
             "keyword": {
@@ -453,6 +594,45 @@ PUT /jurisprudencia-informacoes_ct/
               "ignore_above": 256
             }
           }
+        },
+        "nm_magistrado": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nm_orgao": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nm_orgao_processo": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nome_arquivo": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "notas": {
+          "type": "text"
         },
         "nr_ano_legislacao": {
           "type": "text",
@@ -485,7 +665,13 @@ PUT /jurisprudencia-informacoes_ct/
           "type": "integer"
         },
         "orgao_julgador": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "pg_disponibilizacao": {
           "type": "integer"
@@ -494,19 +680,49 @@ PUT /jurisprudencia-informacoes_ct/
           "type": "integer"
         },
         "publicidade": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "sit_leg": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "situacao": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "status_norma": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "tp_fonte": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "ultima_decisao": {
           "type": "text",
@@ -563,10 +779,22 @@ PUT /jurisprudencia-decisoes/
           "type": "text"
         },
         "devolucao_vistas": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "ds_tp_processo": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "dt_inicio_exercicio": {
           "type": "date",
@@ -577,7 +805,13 @@ PUT /jurisprudencia-decisoes/
           "format": "dd/MM/yyyy"
         },
         "eh_processo_eletronico": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "id_elasticsearch": {
           "type": "text",
@@ -595,13 +829,31 @@ PUT /jurisprudencia-decisoes/
           "type": "text"
         },
         "nm_gabinete": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "nm_magistrado": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "nm_orgao_julgador": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "novaref": {
           "type": "text"
@@ -610,7 +862,13 @@ PUT /jurisprudencia-decisoes/
           "type": "long"
         },
         "nr_processo_fmt": {
-          "type": "text"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "nr_processo_ordem": {
           "type": "text"
@@ -625,7 +883,13 @@ PUT /jurisprudencia-decisoes/
           "type": "integer"
         },
         "orgao": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "precede": {
           "type": "text"
@@ -647,7 +911,13 @@ PUT /jurisprudencia-decisoes/
           "type": "text"
         },
         "retirado_pauta": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "sessao_ano_boletim": {
           "type": "integer"
@@ -660,13 +930,25 @@ PUT /jurisprudencia-decisoes/
           "type": "integer"
         },
         "sol_vista": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "sucede": {
           "type": "text"
         },
         "susp_julgamento": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "texto": {
           "type": "text"
@@ -675,10 +957,22 @@ PUT /jurisprudencia-decisoes/
           "type": "text"
         },
         "tp_processo": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "voto_desempate": {
-          "type": "keyword"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         }
       }
     }
