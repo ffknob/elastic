@@ -37,7 +37,7 @@ PUT /jurisprudencia-sumulas/
           "type": "integer"
         },
         "cd_tipo_legislacao": {
-          "type": "integer"
+          "type": "keyword"
         },
         "desc_mes": {
           "type": "keyword"
@@ -55,13 +55,16 @@ PUT /jurisprudencia-sumulas/
           "type": "keyword"
         },
         "dt_ato": {
-          "type": "date"
+          "type": "date",
+          "format": "dd/MM/yyyy"
         },
         "dt_disponibilizacao": {
-          "type": "date"
+          "type": "date",
+          "format": "dd/MM/yyyy"
         },
         "dt_publicacao": {
-          "type": "date"
+          "type": "date",
+          "format": "dd/MM/yyyy"
         },
         "ementa": {
           "type": "text",
@@ -121,7 +124,7 @@ PUT /jurisprudencia-sumulas/
           "type": "integer"
         },
         "nr_processo": {
-          "type": "integer"
+          "type": "long"
         },
         "nr_processo_fmt": {
           "type": "text",
@@ -207,7 +210,7 @@ PUT /jurisprudencia-pareceres/
           "type": "integer"
         },
         "cd_tipo_legislacao": {
-          "type": "integer"
+          "type": "keyword"
         },
         "desc_mes": {
           "type": "keyword"
@@ -225,13 +228,16 @@ PUT /jurisprudencia-pareceres/
           "type": "keyword"
         },
         "dt_ato": {
-          "type": "date"
+          "type": "date",
+          "format": "dd/MM/yyyy"
         },
         "dt_disponibilizacao": {
-          "type": "date"
+          "type": "date",
+          "format": "dd/MM/yyyy"
         },
         "dt_publicacao": {
-          "type": "date"
+          "type": "date",
+          "format": "dd/MM/yyyy"
         },
         "ementa": {
           "type": "text",
@@ -291,7 +297,7 @@ PUT /jurisprudencia-pareceres/
           "type": "integer"
         },
         "nr_processo": {
-          "type": "integer"
+          "type": "long"
         },
         "nr_processo_fmt": {
           "type": "text",
@@ -377,7 +383,7 @@ PUT /jurisprudencia-informacoes_ct/
           "type": "integer"
         },
         "cd_tipo_legislacao": {
-          "type": "integer"
+          "type": "keyword"
         },
         "desc_mes": {
           "type": "keyword"
@@ -395,13 +401,16 @@ PUT /jurisprudencia-informacoes_ct/
           "type": "keyword"
         },
         "dt_ato": {
-          "type": "date"
+          "type": "date",
+          "format": "dd/MM/yyyy"
         },
         "dt_disponibilizacao": {
-          "type": "date"
+          "type": "date",
+          "format": "dd/MM/yyyy"
         },
         "dt_publicacao": {
-          "type": "date"
+          "type": "date",
+          "format": "dd/MM/yyyy"
         },
         "ementa": {
           "type": "text",
@@ -461,7 +470,7 @@ PUT /jurisprudencia-informacoes_ct/
           "type": "integer"
         },
         "nr_processo": {
-          "type": "integer"
+          "type": "long"
         },
         "nr_processo_fmt": {
           "type": "text",
@@ -560,10 +569,12 @@ PUT /jurisprudencia-decisoes/
           "type": "keyword"
         },
         "dt_inicio_exercicio": {
-          "type": "date"
+          "type": "date",
+          "format": "dd/MM/yyyy"
         },
         "dt_sessao": {
-          "type": "date"
+          "type": "date",
+          "format": "dd/MM/yyyy"
         },
         "eh_processo_eletronico": {
           "type": "keyword"
@@ -596,7 +607,7 @@ PUT /jurisprudencia-decisoes/
           "type": "text"
         },
         "nr_processo": {
-          "type": "integer"
+          "type": "long"
         },
         "nr_processo_fmt": {
           "type": "text"
@@ -623,7 +634,8 @@ PUT /jurisprudencia-decisoes/
           "type": "integer"
         },
         "publicacao_dt_publicacao": {
-          "type": "date"
+          "type": "date",
+          "format": "dd/MM/yyyy"
         },
         "publicacao_nr_boletim": {
           "type": "integer"
@@ -641,7 +653,8 @@ PUT /jurisprudencia-decisoes/
           "type": "integer"
         },
         "sessao_dt_publicacao": {
-          "type": "date"
+          "type": "date",
+          "format": "dd/MM/yyyy"
         },
         "sessao_nr_boletim": {
           "type": "integer"

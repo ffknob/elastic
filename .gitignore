@@ -1,1 +1,2 @@
 V_*.json
+docker-elk/elasticsearch/data/
