@@ -738,7 +738,6 @@ PUT /jurisprudencia-informacoes_ct/
   }
 }
 
-
 PUT /jurisprudencia-decisoes/
 {
   "mappings": {
@@ -798,7 +797,7 @@ PUT /jurisprudencia-decisoes/
         },
         "dt_inicio_exercicio": {
           "type": "date",
-          "format": "dd/MM/yyyy"
+          "format": "yyyy"
         },
         "dt_sessao": {
           "type": "date",
@@ -874,7 +873,7 @@ PUT /jurisprudencia-decisoes/
           "type": "text"
         },
         "nr_processo_referido": {
-          "type": "integer"
+          "type": "long"
         },
         "nr_processo_referido_fmt": {
           "type": "text"

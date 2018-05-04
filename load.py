@@ -8,8 +8,8 @@ es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
 indexes = [
     { 'data_file': 'V_SUMULAS.json', 'index': 'jurisprudencia-sumulas', 'type': 'default'},
     { 'data_file': 'V_INFORMACOES_CT.json', 'index': 'jurisprudencia-informacoes_ct', 'type': 'default'},
-    { 'data_file': 'V_PARECERES.json', 'index': 'jurisprudencia-pareceres', 'type': 'default'}
-    #{ 'data_file': 'V_DECISOES.json', 'index': 'jurisprudencia-decisoes', 'type': 'default'}
+    { 'data_file': 'V_PARECERES.json', 'index': 'jurisprudencia-pareceres', 'type': 'default'},
+    { 'data_file': 'V_DECISOES-01.json', 'index': 'jurisprudencia-decisoes', 'type': 'default'}
 ]
 
 for index in indexes:
@@ -21,7 +21,7 @@ for index in indexes:
         data = json.loads(f.read())
 
     for doc in data["items"]:
-        id = doc["id_elastic_search"]
+        id = doc["id_elasticsearch"]
 
         try:
             es.index(index=index["index"], doc_type=index["type"], id=id, body=doc)
