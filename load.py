@@ -9,7 +9,7 @@ indexes = [
     { 'data_file': 'V_SUMULAS.json', 'index': 'jurisprudencia-sumulas', 'type': 'default'},
     { 'data_file': 'V_INFORMACOES_CT.json', 'index': 'jurisprudencia-informacoes_ct', 'type': 'default'},
     { 'data_file': 'V_PARECERES.json', 'index': 'jurisprudencia-pareceres', 'type': 'default'},
-    { 'data_file': 'V_DECISOES-01.json', 'index': 'jurisprudencia-decisoes', 'type': 'default'}
+#    { 'data_file': 'V_DECISOES-01.json', 'index': 'jurisprudencia-decisoes', 'type': 'default'}
 ]
 
 for index in indexes:
