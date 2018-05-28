@@ -14,13 +14,13 @@ conexao = {
 }
 
 indexes = [
-    {   'index': 'jurisprudencia-sumulas', 'type': 'default',
+    {   'index': 'jurisprudencia-sumulas', 'type': 'default', 'max': 1000,
         'SQL': 'select * from pesquisa.v_sumulas' },
-    {   'index': 'jurisprudencia-informacoes_ct', 'type': 'default',
+    {   'index': 'jurisprudencia-informacoes_ct', 'type': 'default', 'max': 1000,
         'SQL': 'select * from pesquisa.v_informacoes_ct' },
-    {   'index': 'jurisprudencia-pareceres', 'type': 'default',
+    {   'index': 'jurisprudencia-pareceres', 'type': 'default', 'max': 1000,
         'SQL': 'select * from pesquisa.v_pareceres' },
-    {   'index': 'jurisprudencia-decisoes', 'type': 'default',
+    {   'index': 'jurisprudencia-decisoes', 'type': 'default', 'max': 1000,
         'SQL': 'select * from pesquisa.v_decisoes' }
 ]
 
@@ -31,14 +31,14 @@ def conectar(string_conexao):
         print('Erro: ' + str(e))
         return None
 
-def load(index, db, quantidade = 50):
+def load(index, db):
     cursor = db.cursor()
     cursor.execute(index['SQL'])
 
     total = 0
     sucessos = 0
     erros = 0
-    for i in range(0, quantidade):
+    for i in range(0, index['max']):
         try:
             row = cursor.fetchone()
 
@@ -79,7 +79,7 @@ def main():
     db = conectar(string_conexao)
 
     if db:
-        load(indexes[0], db, 30)
+        load(indexes[3], db)
     else:
         print('Erro')
 
