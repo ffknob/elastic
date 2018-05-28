@@ -39,8 +39,6 @@ def load(index, db, quantidade = 50):
     sucessos = 0
     erros = 0
     for i in range(0, quantidade):
-        total += 1
-
         try:
             row = cursor.fetchone()
 
@@ -53,9 +51,11 @@ def load(index, db, quantidade = 50):
                 try:
                     #print repr(json.dumps(o, indent=4, sort_keys=True, default=str))
                     es.index(index=index['index'], doc_type=index['type'], id=o['id_elasticsearch'], body=json.dumps(o, indent=4, sort_keys=True, default=str))
+                    total += 1
                     sucessos += 1
 
                 except Exception as e:
+                    total += 1
                     erros += 1
                     print "[ERRO] {} -> {}: {}".format(index['index'], o['id_elasticsearch'], e)
                     continue
@@ -63,6 +63,7 @@ def load(index, db, quantidade = 50):
                 break
 
         except Exception as e:
+            total += 1
             erros += 1
             print "[ERRO] {}: {}".format(index['index'], e)
 
