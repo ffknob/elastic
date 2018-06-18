@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import json
 import codecs
 import cx_Oracle
@@ -14,14 +16,27 @@ conexao = {
 }
 
 indexes = [
-    {   'index': 'jurisprudencia-sumulas', 'type': 'default', 'max': 1000,
+    {   'name': 'Súmulas', 'index': 'jurisprudencia-sumulas', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/V_SUMULAS.json',
         'SQL': 'select * from pesquisa.v_sumulas' },
-    {   'index': 'jurisprudencia-informacoes_ct', 'type': 'default', 'max': 1000,
+    {   'name': 'Informações da Consultoria Técnica', 'index': 'jurisprudencia-informacoes_ct', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/V_INFORMACOES_CT.json',
         'SQL': 'select * from pesquisa.v_informacoes_ct' },
-    {   'index': 'jurisprudencia-pareceres', 'type': 'default', 'max': 1000,
+    {   'name': 'Pareceres da Auditoria/Consultoria', 'index': 'jurisprudencia-pareceres', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/V_PARECERES.json',
         'SQL': 'select * from pesquisa.v_pareceres' },
-    {   'index': 'jurisprudencia-decisoes', 'type': 'default', 'max': 1000,
-        'SQL': 'select * from pesquisa.v_decisoes' }
+    {   'name': 'Decisões', 'index': 'jurisprudencia-decisoes', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/V_DECISOES-01.json',
+        'SQL': 'select * from pesquisa.v_decisoes' },
+    {   'name': 'Conselheiros relatores', 'index': 'listas', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/conselheiros_relatores.json',
+        'SQL': 'select * from pesquisa.v_conselheiros_relatores' },
+    {   'name': 'Órgãos julgadores', 'index': 'listas', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/orgaos_julgadores.json',
+        'SQL': 'select * from pesquisa.v_orgaos_julgadores' },
+    {   'name': 'Tipos de processos', 'index': 'listas', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/tipos_processos.json',
+        'SQL': 'select * from pesquisa.v_tipos_processos' }
 ]
 
 def conectar(string_conexao):
@@ -31,7 +46,7 @@ def conectar(string_conexao):
         print('Erro: ' + str(e))
         return None
 
-def load(index, db):
+def load_oracle(index, db):
     cursor = db.cursor()
     cursor.execute(index['SQL'])
 
@@ -67,8 +82,31 @@ def load(index, db):
             erros += 1
             print "[ERRO] {}: {}".format(index['index'], e)
 
-    print "{} -> {} total, {} sucessos, {} erros".format(index['index'], total, sucessos, erros)
+    print "{} -> {} total, {} sucessos, {} erros".format(index['name'], total, sucessos, erros)
     cursor.close()
+
+def load_json(index):
+    total = 0
+    sucessos = 0
+    erros = 0
+    with codecs.open(index['data_file'], 'rU', 'utf-8') as f:
+        data = json.loads(f.read())
+
+    for doc in data['items']:
+        id = doc['id_elasticsearch']
+
+        try:
+            es.index(index=index['index'], doc_type=index['type'], id=id, body=doc)
+            total += 1
+            sucessos += 1
+
+        except Exception as e:
+            print "{} -> {}: ERROR {}".format(index["index"], id, e)
+            total += 1
+            erros += 1
+            continue
+
+    print "{} -> {} total, {} sucessos, {} erros".format(index['name'], total, sucessos, erros)
 
 def main():
     string_conexao = conexao['usuario'] + '/' + \
@@ -76,14 +114,22 @@ def main():
                      conexao['servidor'] + '/' + \
                      conexao['servico']
 
+    #load_json(indexes[0])
+    load_json(indexes[1])
+    load_json(indexes[2])
+    load_json(indexes[3])
+'''
+    print "Loading {}...".format(index['name'])
+
     db = conectar(string_conexao)
 
     if db:
-        load(indexes[3], db)
+        load_oracle(indexes[3], db)
     else:
         print('Erro')
 
     db.close()
+'''
 
 if __name__ == '__main__':
     main()

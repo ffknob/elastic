@@ -74,15 +74,15 @@ PUT /jurisprudencia-sumulas/
         },
         "dt_ato": {
           "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
+          "format": "dd/MM/yyyy"
         },
         "dt_disponibilizacao": {
           "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
+          "format": "dd/MM/yyyy"
         },
         "dt_publicacao": {
           "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
+          "format": "dd/MM/yyyy"
         },
         "ementa": {
           "type": "text"
@@ -319,15 +319,15 @@ PUT /jurisprudencia-pareceres/
         },
         "dt_ato": {
           "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
+          "format": "dd/MM/yyyy"
         },
         "dt_disponibilizacao": {
           "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
+          "format": "dd/MM/yyyy"
         },
         "dt_publicacao": {
           "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
+          "format": "dd/MM/yyyy"
         },
         "ementa": {
           "type": "text"
@@ -564,15 +564,15 @@ PUT /jurisprudencia-informacoes_ct/
         },
         "dt_ato": {
           "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
+          "format": "dd/MM/yyyy"
         },
         "dt_disponibilizacao": {
           "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
+          "format": "dd/MM/yyyy"
         },
         "dt_publicacao": {
           "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
+          "format": "dd/MM/yyyy"
         },
         "ementa": {
           "type": "text"
@@ -801,7 +801,7 @@ PUT /jurisprudencia-decisoes/
         },
         "dt_sessao": {
           "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
+          "format": "dd/MM/yyyy"
         },
         "eh_processo_eletronico": {
           "type": "text",
@@ -898,7 +898,7 @@ PUT /jurisprudencia-decisoes/
         },
         "publicacao_dt_publicacao": {
           "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
+          "format": "dd/MM/yyyy"
         },
         "publicacao_nr_boletim": {
           "type": "integer"
@@ -923,7 +923,7 @@ PUT /jurisprudencia-decisoes/
         },
         "sessao_dt_publicacao": {
           "type": "date",
-          "format": "yyyy-MM-dd HH:mm:ss"
+          "format": "dd/MM/yyyy"
         },
         "sessao_nr_boletim": {
           "type": "integer"
