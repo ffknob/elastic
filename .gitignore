@@ -1,2 +1,4 @@
 V_DECISOES.json
+*.bak
+*.transformed
 docker-elk/elasticsearch/data/
