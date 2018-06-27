@@ -4,7 +4,7 @@ DELETE /jurisprudencia-pareceres/
 DELETE /jurisprudencia-informacoes_ct/
 DELETE /jurisprudencia-decisoes/
 
-PUT /pesqusias-realizadas/
+PUT /pesquisas-realizadas/
 {
   "mappings": {
     "default": {
