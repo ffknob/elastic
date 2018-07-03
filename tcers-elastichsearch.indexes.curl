@@ -1,8 +1,68 @@
+DELETE /listas/
 DELETE /pesquisas-realizadas/
 DELETE /jurisprudencia-sumulas/
 DELETE /jurisprudencia-pareceres/
 DELETE /jurisprudencia-informacoes_ct/
 DELETE /jurisprudencia-decisoes/
+
+PUT /listas/
+{
+  "mappings": {
+    "default": {
+      "dynamic": false,
+      "properties": {
+        "@timestamp": {
+          "type": "date"
+        },
+        "@version": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "origem": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "nome": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "chave": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "valor": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
 PUT /pesquisas-realizadas/
 {

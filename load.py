@@ -7,7 +7,14 @@ import codecs
 import cx_Oracle
 from elasticsearch import Elasticsearch
 
-es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
+# Localhost
+#es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
+# DSV
+es = Elasticsearch([{'host': 'vmsrv103.tce.rs.gov.br', 'port': 80}])
+# HMG
+#es = Elasticsearch([{'host': 'vmsrv104.tce.rs.gov.br', 'port': 80}])
+# PRD
+#es = Elasticsearch([{'host': 'vmsrv96.tce.rs.gov.br', 'port': 80}])
 
 conexao = {
     'usuario': 'tcers',
@@ -17,27 +24,24 @@ conexao = {
 }
 
 indexes = [
-    {   'name': 'Súmulas', 'index': 'jurisprudencia-sumulas', 'type': 'default', 'max': 1000,
-        'data_file': 'jsons/V_SUMULAS.json',
-        'SQL': 'select * from pesquisa.v_sumulas' },
-    {   'name': 'Informações da Consultoria Técnica', 'index': 'jurisprudencia-informacoes_ct', 'type': 'default', 'max': 1000,
-        'data_file': 'jsons/V_INFORMACOES_CT.json',
-        'SQL': 'select * from pesquisa.v_informacoes_ct' },
-    {   'name': 'Pareceres da Auditoria/Consultoria', 'index': 'jurisprudencia-pareceres', 'type': 'default', 'max': 1000,
-        'data_file': 'jsons/V_PARECERES.json',
-        'SQL': 'select * from pesquisa.v_pareceres' },
-    {   'name': 'Decisões', 'index': 'jurisprudencia-decisoes', 'type': 'default', 'max': 1000,
-        'data_file': 'jsons/V_DECISOES-01.json',
-        'SQL': 'select * from pesquisa.v_decisoes' },
-    {   'name': 'Conselheiros relatores', 'index': 'listas', 'type': 'default', 'max': 1000,
-        'data_file': 'jsons/conselheiros_relatores.json',
-        'SQL': 'select * from pesquisa.v_conselheiros_relatores' },
-    {   'name': 'Órgãos julgadores', 'index': 'listas', 'type': 'default', 'max': 1000,
-        'data_file': 'jsons/orgaos_julgadores.json',
-        'SQL': 'select * from pesquisa.v_orgaos_julgadores' },
-    {   'name': 'Tipos de processos', 'index': 'listas', 'type': 'default', 'max': 1000,
-        'data_file': 'jsons/tipos_processos.json',
-        'SQL': 'select * from pesquisa.v_tipos_processos' }
+    {   'prettyName': 'Súmulas', 'name': 'sumulas', 'index': 'jurisprudencia-sumulas', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/V_SUMULAS.json', 'SQL': 'select * from pesquisa.v_sumulas' },
+    {   'prettyName': 'Informações da Consultoria Técnica', 'name': 'informacoes-consultoria-tecnica', 'index': 'jurisprudencia-informacoes_ct', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/V_INFORMACOES_CT.json', 'SQL': 'select * from pesquisa.v_informacoes_ct' },
+    {   'prettyName': 'Pareceres da Auditoria/Consultoria', 'name': 'pareceres-auditoria-consultoria', 'index': 'jurisprudencia-pareceres', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/V_PARECERES.json', 'SQL': 'select * from pesquisa.v_pareceres' },
+    {   'prettyName': 'Decisões', 'name': 'decisoes', 'index': 'jurisprudencia-decisoes', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/V_DECISOES-01.json', 'SQL': 'select * from pesquisa.v_decisoes' },
+
+    {   'prettyName': 'Decisões/Relatores', 'name': 'decisoes-relatores', 'origem': 'MV_DECISOES_RELATORES', 'index': 'listas', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/decisoes_relatores.json', 'SQL': 'select \'decisoes-relatores\' nome, \'MV_DECISOES_RELATORES\' origem, mdr.id_elasticsearch, mdr.cd_magistrado chave, mdr.nm_magistrado valor from pesquisa.mv_decisoes_relatores mdr' },
+    {   'prettyName': 'Decisões/Órgãos', 'name': 'decisoes-orgaos', 'origem': 'MV_DECISOES_ORGAOS', 'index': 'listas', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/decisoes_orgaos.json', 'SQL': 'select \'decisoes-orgaos\' nome, \'MV_DECISOES_ORGAOS\' origem, mdo.id_elasticsearch, mdo.cd_orgao chave, mdo.nm_orgao valor from pesquisa.mv_decisoes_orgaos mdo' },
+    {   'prettyName': 'Órgãos Julgadores', 'name': 'orgaos-julgadores', 'origem': 'V_ORGAOS_JULGADORES', 'index': 'listas', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/orgaos_julgadores.json', 'SQL': 'select * from pesquisa.v_orgaos_julgadores' },
+    {   'prettyName': 'Tipos Processos', 'name': 'tipos-processos', 'origem': 'V_TIPOS_PROCESSOS', 'index': 'listas', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/tipos_processos.json', 'SQL': 'select * from pesquisa.v_tipos_processos' }
+
 ]
 
 def conectar(string_conexao):
@@ -83,7 +87,7 @@ def load_oracle(index, db):
             erros += 1
             print "[ERRO] {}: {}".format(index['index'], e)
 
-    print "{} -> {} total, {} sucessos, {} erros".format(index['name'], total, sucessos, erros)
+    print "{} -> {} total, {} sucessos, {} erros".format(index['prettyName'], total, sucessos, erros)
     cursor.close()
 
 def load_json(index):
@@ -107,7 +111,7 @@ def load_json(index):
             erros += 1
             continue
 
-    print "{} -> {} total, {} sucessos, {} erros".format(index['name'], total, sucessos, erros)
+    print "{} -> {} total, {} sucessos, {} erros".format(index['prettyName'], total, sucessos, erros)
 
 def transform_json(index):
     total = 0
@@ -146,14 +150,19 @@ def main():
     #transform_json(indexes[0])
     #transform_json(indexes[1])
     #transform_json(indexes[2])
-    #transform_json(indexes[3])
+    #transform_json(indexes[3]) # Decisões
 
-    load_json(indexes[0])
-    load_json(indexes[1])
-    load_json(indexes[2])
-    load_json(indexes[3])
+    #load_json(indexes[0]) # Súmulas
+    #load_json(indexes[1]) # Informações da Consultoria Técnica
+    #load_json(indexes[2]) # Pareceres da Auditoria/Consultoria
+    #load_json(indexes[3]) # Decisões
+    #load_json(indexes[4]) # Decisões/Órgãos
+    load_json(indexes[5]) # Decisões/Relatores
+    #load_json(indexes[6]) # Órgãos Julgadores
+    #load_json(indexes[7]) # Tipos Processos
+
 '''
-    print "Loading {}...".format(index['name'])
+    print "Loading {}...".format(index['prettyName'])
 
     db = conectar(string_conexao)
 
