@@ -156,10 +156,10 @@ def main():
     #load_json(indexes[1]) # Informações da Consultoria Técnica
     #load_json(indexes[2]) # Pareceres da Auditoria/Consultoria
     #load_json(indexes[3]) # Decisões
-    #load_json(indexes[4]) # Decisões/Órgãos
+    load_json(indexes[4]) # Decisões/Órgãos
     load_json(indexes[5]) # Decisões/Relatores
-    #load_json(indexes[6]) # Órgãos Julgadores
-    #load_json(indexes[7]) # Tipos Processos
+    load_json(indexes[6]) # Órgãos Julgadores
+    load_json(indexes[7]) # Tipos Processos
 
 '''
     print "Loading {}...".format(index['prettyName'])
