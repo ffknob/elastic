@@ -37,11 +37,10 @@ indexes = [
         'data_file': 'jsons/decisoes_relatores.json', 'SQL': 'select \'decisoes-relatores\' nome, \'MV_DECISOES_RELATORES\' origem, mdr.id_elasticsearch, mdr.cd_magistrado chave, mdr.nm_magistrado valor from pesquisa.mv_decisoes_relatores mdr' },
     {   'prettyName': 'Decisões/Órgãos', 'name': 'decisoes-orgaos', 'origem': 'MV_DECISOES_ORGAOS', 'index': 'listas', 'type': 'default', 'max': 1000,
         'data_file': 'jsons/decisoes_orgaos.json', 'SQL': 'select \'decisoes-orgaos\' nome, \'MV_DECISOES_ORGAOS\' origem, mdo.id_elasticsearch, mdo.cd_orgao chave, mdo.nm_orgao valor from pesquisa.mv_decisoes_orgaos mdo' },
-    {   'prettyName': 'Órgãos Julgadores', 'name': 'orgaos-julgadores', 'origem': 'V_ORGAOS_JULGADORES', 'index': 'listas', 'type': 'default', 'max': 1000,
-        'data_file': 'jsons/orgaos_julgadores.json', 'SQL': 'select * from pesquisa.v_orgaos_julgadores' },
-    {   'prettyName': 'Tipos Processos', 'name': 'tipos-processos', 'origem': 'V_TIPOS_PROCESSOS', 'index': 'listas', 'type': 'default', 'max': 1000,
-        'data_file': 'jsons/tipos_processos.json', 'SQL': 'select * from pesquisa.v_tipos_processos' }
-
+    {   'prettyName': 'Decisões/Órgãos Julgadores', 'name': 'decisoes-orgaos-julgadores', 'origem': 'MV_DECISOES_ORGAOS_JULGADORES', 'index': 'listas', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/decisoes_orgaos_julgadores.json', 'SQL': 'select \'decisoes-orgaos-julgadores\' nome, \'MV_DECISOES_ORGAOS_JULGADORES\' origem, mdoj.id_elasticsearch, mdoj.cd_orgao_julgador chave, mdoj.nm_orgao_julgador valor from pesquisa.mv_decisoes_orgaos_julgadores mdoj' },
+    {   'prettyName': 'Decisões/Tipos Processos', 'name': 'decisoes-tipos-processos', 'origem': 'MV_DECISOES_TIPOS_PROCESSOS', 'index': 'listas', 'type': 'default', 'max': 1000,
+        'data_file': 'jsons/decisoes_tipos_processos.json', 'SQL': 'select \'decisoes-tipos-processos\' nome, \'MV_DECISOES_TIPOS_PROCESSOS\' origem, mdtp.id_elasticsearch, mdtp.cd_magistrado chave, mdtp.nm_magistrado valor from pesquisa.mv_decisoes_tipos_processos mdtp' }
 ]
 
 def conectar(string_conexao):
@@ -158,8 +157,8 @@ def main():
     #load_json(indexes[3]) # Decisões
     load_json(indexes[4]) # Decisões/Órgãos
     load_json(indexes[5]) # Decisões/Relatores
-    load_json(indexes[6]) # Órgãos Julgadores
-    load_json(indexes[7]) # Tipos Processos
+    load_json(indexes[6]) # Decisões/Órgãos Julgadores
+    load_json(indexes[7]) # Decisões/Tipos Processos
 
 '''
     print "Loading {}...".format(index['prettyName'])
