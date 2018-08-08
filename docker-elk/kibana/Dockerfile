@@ -1,6 +1,6 @@
 # https://github.com/elastic/kibana-docker
-ARG TAG
-FROM docker.elastic.co/kibana/kibana-oss:$TAG
+ARG ELK_VERSION 
+FROM docker.elastic.co/kibana/kibana-oss:$ELK_VERSION
 
 # Add your kibana plugins setup here
 # Example: RUN kibana-plugin install <name|url>

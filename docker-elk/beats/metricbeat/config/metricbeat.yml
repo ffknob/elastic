@@ -1,0 +1,5 @@
+output.logstash:
+  hosts: ["${LOGSTASH_HOST:127.0.0.1}:${LOGSTASH_PORT:5044}"]
+
+setup.kibana:
+  host: "${KIBANA_HOST}:${KIBANA_PORT:5601}"

@@ -1,15 +1,16 @@
-version: '2'
+version: '3'
 
 services:
 
   elasticsearch:
+    container_name: tcers_elasticsearch
     build:
       context: elasticsearch/
       args:
-        - TAG=$TAG
+        - ELK_VERSION=$ELK_VERSION
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-      - ../elasticsearch/data:/usr/share/elasticsearch/data
+      - ./elasticsearch/data:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -19,13 +20,14 @@ services:
       - elk
 
   logstash:
+    container_name: tcers_logstash
     build:
       context: logstash/
       args:
-        - TAG=$TAG
+        - ELK_VERSION=$ELK_VERSION
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ../logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
     ports:
       - "5000:5000"
       - "5044:5044"
@@ -40,7 +42,7 @@ services:
     build:
       context: kibana/
       args:
-        - TAG=$TAG
+        - ELK_VERSION=$ELK_VERSION
     volumes:
       - ./kibana/config/:/usr/share/kibana/config:ro
     ports:
@@ -49,6 +51,39 @@ services:
       - elk
     depends_on:
       - elasticsearch
+
+  metricbeat:
+    build:
+      context: beats/metricbeat/
+    command: -e
+    environment:
+      - LOGSTASH_HOST=$LOGSTASH_HOST
+      - LOGSTASH_PORT=$LOGSTASH_PORT
+      - KIBANA_HOST=$KIBANA_HOST
+      - KIBANA_PORT=$KIBANA_PORT
+    depends_on:
+      - logstash
+      - kibana
+    networks:
+      - elk
+
+  metricbeat-host:
+    build:
+      context: beats/metricbeat/
+      args:
+        - ELK_VERSION=$ELK_VERSION
+    environment:
+      - LOGSTASH_HOST=$LOGSTASH_HOST
+      - LOGSTASH_PORT=$LOGSTASH_PORT
+      - KIBANA_HOST=$KIBANA_HOST
+      - KIBANA_PORT=$KIBANA_PORT
+    volumes:
+      - ./beats/metricbeat/config/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+      - /proc:/hostfs/proc:ro
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /:/hostfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    network_mode: host    
 
 networks:
 

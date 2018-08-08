@@ -1,6 +1,3 @@
-# https://github.com/elastic/elasticsearch-docker
-ARG TAG
-FROM docker.elastic.co/beats/filebeat:$TAG
+ARG ELK_VERSION 
+FROM docker.elastic.co/beats/filebeat:$ELK_VERSION
 
-# Add your elasticsearch plugins setup here
-# Example: RUN elasticsearch-plugin install analysis-icu
