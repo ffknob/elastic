@@ -26,13 +26,13 @@ _tcers/beats/heartbeat/heartbeats/*.yml_: configurações dos heartbeats
 
 Para instalar os arquivos de configuração:
  
-_$ ./install.sh_
+_$ sudo /install.sh_
 
 ## Execução
 
 Para executar a stack:
 
-_$ ./run.sh_
+_$ sudo ./run.sh_
 
 ## Serviços
 
