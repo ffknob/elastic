@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Elasticsearch
+chown 1000:1000 docker-elk/elasticsearch/data/
 cp -f tcers/elasticsearch/config/elasticsearch.yml docker-elk/elasticsearch/config/elasticsearch.yml
 
 # Logstash
