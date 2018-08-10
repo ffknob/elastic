@@ -2,8 +2,8 @@ metricbeat.modules:
 
 - module: system
   metricsets: ["cpu", "load", "filesystem", "fsstat", "memory", "network", "process", "core", "diskio", "socket"]
-  period: 5s
   enabled: true
+  period: 5s
   processes: ['.*']
   cpu.metrics:  ["percentages"]
   core.metrics: ["percentages"]
@@ -14,8 +14,13 @@ metricbeat.modules:
   enabled: true
   period: 5s
 
-output.logstash:
-  hosts: ["${LOGSTASH_HOST:127.0.0.1}:${LOGSTASH_PORT:5044}"]
+#output.logstash:
+#  hosts: ["${LOGSTASH_HOST:127.0.0.1}:${LOGSTASH_PORT:5044}"]
+
+output.elasticsearch:
+  hosts: ["${ELASTICSEARCH_HOST:127.0.0.1}:${ELASTICSEARCH_PORT:9200}"]
 
 setup.kibana:
   host: "${KIBANA_HOST:127.0.0.1}:${KIBANA_PORT:5601}"
+
+setup.dashboards.enabled: true
