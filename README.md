@@ -26,14 +26,13 @@ _tcers/beats/heartbeat/heartbeats/*.yml_: configurações dos heartbeats
 
 Para instalar os arquivos de configuração:
  
-_$ ./install-tcers.sh_
+_$ ./install.sh_
 
 ## Execução
 
 Para executar a stack:
 
-_$ cd docker-elk/_
-_$ docker-compose up -d_
+_$ ./run.sh_
 
 ## Serviços
 
