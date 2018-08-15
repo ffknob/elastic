@@ -98,26 +98,26 @@ services:
     network_mode: host    
 
   # Métricas das aplicações
-  hb-portal-internet:
-   container_name: tcers_hb-portal-internet
-   build: 
-     context: beats/heartbeat/
-     args:
-       - ELK_VERSION=$ELK_VERSION
-   environment:
-     - WAIT_FOR_HOSTS=elasticsearch:9200 kibana:5601
-     - ELASTICSEARCH_HOST=elasticsearch
-     - ELASTICSEARCH_PORT=9200
-     - LOGSTASH_HOST=logstash
-     - LOGSTASH_PORT=5044
-     - KIBANA_HOST=kibana
-     - KIBANA_PORT=5601
-   volumes:
-     - ./beats/heartbeat/heartbeats/portal-internet.yml:/usr/share/heartbeat/heartbeat.yml:ro
-   networks:
-     - elk
-   depends_on:
-     - elasticsearch
+  #  hb-portal-internet:
+  # container_name: tcers_hb-portal-internet
+  # build: 
+  #   context: beats/heartbeat/
+  #   args:
+  #     - ELK_VERSION=$ELK_VERSION
+  # environment:
+  #   - WAIT_FOR_HOSTS=elasticsearch:9200 kibana:5601
+  #   - ELASTICSEARCH_HOST=elasticsearch
+  #   - ELASTICSEARCH_PORT=9200
+  #   - LOGSTASH_HOST=logstash
+  #   - LOGSTASH_PORT=5044
+  #   - KIBANA_HOST=kibana
+  #   - KIBANA_PORT=5601
+  # volumes:
+  #   - ./beats/heartbeat/heartbeats/portal-internet.yml:/usr/share/heartbeat/heartbeat.yml:ro
+  # networks:
+  #   - elk
+  # depends_on:
+  #   - elasticsearch
 
 networks:
   elk:
