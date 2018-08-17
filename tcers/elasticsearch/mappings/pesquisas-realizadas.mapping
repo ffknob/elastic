@@ -2,6 +2,18 @@ DELETE /pesquisas-realizadas/
 
 PUT /pesquisas-realizadas/
 {
+  "settings": {
+    "index": {
+      "analysis": {
+        "analyzer": {
+          "analyzer_startswith": {
+            "tokenizer": "keyword",
+            "filter": "lowercase"
+          }
+        }
+      }
+    }
+  },
   "mappings": {
     "default": {
       "dynamic": false,
@@ -58,6 +70,8 @@ PUT /pesquisas-realizadas/
             },
             "original": {
               "type": "text",
+              "search_analyzer": "analyzer_startswith",
+              "analyzer": "analyzer_startswith",
               "fields": {
                 "keyword": {
                   "type": "keyword",
