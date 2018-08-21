@@ -3,7 +3,7 @@ DELETE /diarias/
 PUT /diarias/
 {
   "mappings": {
-    "default": {
+    "doc": {
       "dynamic": false,
       "properties": {
         "@timestamp": {
