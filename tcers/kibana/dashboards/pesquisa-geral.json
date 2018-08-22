@@ -1,0 +1,18 @@
+[
+  {
+    "_id": "4a1cf990-a61f-11e8-8c30-4d28f23b791a",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Pesquisa / Geral",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"embeddableConfig\":{\"spy\":null},\"gridData\":{\"h\":3,\"i\":\"1\",\"w\":6,\"x\":0,\"y\":0},\"id\":\"336a4680-a61f-11e8-8c30-4d28f23b791a\",\"panelIndex\":\"1\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"gridData\":{\"h\":3,\"i\":\"2\",\"w\":6,\"x\":6,\"y\":0},\"id\":\"80f58090-a61f-11e8-8c30-4d28f23b791a\",\"panelIndex\":\"2\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"gridData\":{\"h\":3,\"i\":\"3\",\"w\":6,\"x\":0,\"y\":3},\"id\":\"22e1ae60-a620-11e8-8c30-4d28f23b791a\",\"panelIndex\":\"3\",\"type\":\"visualization\",\"version\":\"6.2.4\"}]",
+      "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":false,\"useMargins\":true}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  }
+]
