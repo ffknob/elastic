@@ -81,7 +81,7 @@ PUT /jurisprudencia-informacoes_ct/
         "ementa": {
           "type": "text"
         },
-        "id_elastic_search": {
+        "id_elasticsearch": {
           "type": "text",
           "fields": {
             "keyword": {

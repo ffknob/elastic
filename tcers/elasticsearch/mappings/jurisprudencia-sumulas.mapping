@@ -81,7 +81,7 @@ PUT /jurisprudencia-sumulas/
         "ementa": {
           "type": "text"
         },
-        "id_elastic_search": {
+        "id_elasticsearch": {
           "type": "text",
           "fields": {
             "keyword": {
