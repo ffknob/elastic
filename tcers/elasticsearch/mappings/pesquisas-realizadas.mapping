@@ -16,17 +16,62 @@ PUT /pesquisas-realizadas/
   },
   "mappings": {
     "default": {
-      "dynamic": false,
       "properties": {
-        "@timestamp": {
+        "dataHorario": {
           "type": "date"
         },
-        "@version": {
-          "type": "text",
-          "fields": {
-            "keyword": {
-              "type": "keyword",
-              "ignore_above": 256
+        "filtros": {
+          "properties": {
+            "campo": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "inicio": {
+              "type": "date"
+            },
+            "isRemovivel": {
+              "type": "boolean"
+            },
+            "nome": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "tipo": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "valor": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "valores": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
             }
           }
         },
@@ -39,14 +84,14 @@ PUT /pesquisas-realizadas/
             }
           }
         },
-        "dataHorario": {
-          "type": "date"
-        },
-        "total": {
-          "type": "integer"
-        },
         "tempoDecorrido": {
-          "type": "float"
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
         },
         "termos": {
           "properties": {
@@ -68,10 +113,17 @@ PUT /pesquisas-realizadas/
                 }
               }
             },
+            "operandosExpandidos": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
             "original": {
               "type": "text",
-              "search_analyzer": "analyzer_startswith",
-              "analyzer": "analyzer_startswith",
               "fields": {
                 "keyword": {
                   "type": "keyword",
@@ -90,36 +142,8 @@ PUT /pesquisas-realizadas/
             }
           }
         },
-        "filtros": {
-          "properties": {
-            "campo": {
-              "type": "text",
-              "fields": {
-                "keyword": {
-                  "type": "keyword",
-                  "ignore_above": 256
-                }
-              }
-            },
-            "nome": {
-              "type": "text",
-              "fields": {
-                "keyword": {
-                  "type": "keyword",
-                  "ignore_above": 256
-                }
-              }
-            },
-            "valores": {
-              "type": "text",
-              "fields": {
-                "keyword": {
-                  "type": "keyword",
-                  "ignore_above": 256
-                }
-              }
-            }
-          }
+        "total": {
+          "type": "long"
         }
       }
     }
