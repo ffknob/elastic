@@ -1,38 +1,42 @@
-# TCE/RS Elastic stack
+# Elastic Stack
 
-## Configuração
+## Configuration
 
 ### Logstash
 
-- _tcers/logstash/config/logstash.yml_: configurações gerais do _Logstash_
-- _tcers/logstash/pipeline/*.conf_: pipelines do _Logstash_
+- _config/logstash/config/logstash.yml_: _Logstash_'s main configuration file
+- _config/logstash/pipeline/*.conf_: _Logstash_'s pipelines
 
 ### Elasticsearch 
 
-- _tcers/elasticsearch/config/elasticsearch.yml_: configurações gerais do _Elasticsearch_
+- _config/elasticsearch/config/elasticsearch.yml_: _Elasticsearch_'s main configuration file
 
-### Elasticsearch 
+### Kibana
 
-- _tcers/ikibana/config/kibana.yml_: configurações gerais do _Kibana_
+- _config/kibana/config/kibana.yml_: _Kibana_'s maicn configuration file
 
 ### Beats
 
-- _tcers/beats/metricbeat/config/metricbeat.yml_: configurações gerais do _Metricbeat_
-- _tcers/beats/metricbeat/config/metricbeat-host.yml_: configurações gerais do _Metricbeat_ do host do container
+- _config/beats/metricbeat/config/metricbeat.yml_: _Metricbeat_ general configuration (collects container's metrics)
+- _config/beats/metricbeat/config/metricbeat-host.yml_: _Metricbeat_ host configuration file (collects host's metrics)
 
-- _tcers/beats/heartbeat/heartbeats/*.yml_: configurações dos heartbeats
+- _config/beats/heartbeat/heartbeats/*.yml_: heartbeats
 
-## Instalação
+## Install
 
-Para instalar os arquivos de configuração:
+To install all the configuration files into the containers:
  
-_$ sudo /install.sh_
+_$ ./elastic-ctl.sh install
 
-## Execução
+## Running
 
-Para executar a stack:
+To start the stack:
 
-_$ sudo ./run.sh_
+`$ ./elastic-ctl.sh start`
+
+To stop the stack:
+
+`$ ./elastic-ctl.sh stop`
 
 ## Serviços
 
