@@ -26,7 +26,7 @@
 
 To install all the configuration files into the containers:
  
-_$ ./elastic-ctl.sh install
+`$ ./elastic-ctl.sh install`
 
 ## Running
 
