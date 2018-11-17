@@ -28,6 +28,10 @@ install() {
 
 	# Heartbeat
 	cp -f config/beats/heartbeat/heartbeats/*.yml docker-elastic/beats/heartbeat/heartbeats/ 2> /dev/null
+
+	# Build
+	cd docker-elastic/
+	docker-compose build
 }
 
 start() {

@@ -1,5 +1,7 @@
 # Elastic Stack
 
+Version: 6.5.0
+
 ## Configuration
 
 ### Logstash
@@ -17,8 +19,8 @@
 
 ### Beats
 
-- _config/beats/metricbeat/config/metricbeat.yml_: _Metricbeat_ general configuration (collects container's metrics)
-- _config/beats/metricbeat/config/metricbeat-host.yml_: _Metricbeat_ host configuration file (collects host's metrics)
+- _config/beats/metricbeat/config/metricbeat.yml_: _Metricbeat_'s general configuration (collects container's metrics)
+- _config/beats/metricbeat/config/metricbeat-host.yml_: _Metricbeat_'s host configuration file (collects host's metrics)
 
 - _config/beats/heartbeat/heartbeats/*.yml_: heartbeats
 
