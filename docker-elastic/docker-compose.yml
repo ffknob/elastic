@@ -124,3 +124,4 @@ networks:
 
 volumes:
   elasticsearch_data:
+    name: elasticsearch_data_$ELASTIC_VERSION

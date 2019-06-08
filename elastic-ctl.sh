@@ -2,7 +2,7 @@
 
 use() {
 
-	echo "${0} install|start|stop"
+	echo "${0} install|build [ELASTIC_VERSION]|start [ELASTIC_VERSION]|stop"
 	echo "	install		installs configuration files for the containers"
 	echo "	start		starts the stack"
 	echo "	stop		stops the stack"
@@ -28,15 +28,26 @@ install() {
 
 	# Heartbeat
 	cp -f config/beats/heartbeat/heartbeats/*.yml docker-elastic/beats/heartbeat/heartbeats/ 2> /dev/null
+}
 
-	# Build
+build() {
 	cd docker-elastic/
-	docker-compose build
+	if [ -z "${1}" ]
+	then
+		docker-compose build
+	else
+		ELASTIC_VERSION=${1} docker-compose build
+	fi
 }
 
 start() {
 	cd docker-elastic/
-	docker-compose up -d
+	if [ -z "${1}" ]
+	then
+		docker-compose up -d
+	else
+		ELASTIC_VERSION=${1} docker-compose up -d
+	fi
 }
 
 stop() {
@@ -53,8 +64,11 @@ case "${1}" in
 	"install")
 		install
 		;;
+	"build")
+		build ${2}
+		;;
 	"start")
-		start
+		start ${2}
 		;;
 	"stop")
 		stop

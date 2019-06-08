@@ -30,17 +30,31 @@ To install all the configuration files into the containers:
  
 `$ ./elastic-ctl.sh install`
 
+## Build
+
+To build the containers:
+
+`$ ./elastic-ctl.sh build`
+
+You can also pass a specific version:
+
+`$ ./elastic-ctl.sh build 7.2.0`
+
 ## Running
 
 To start the stack:
 
 `$ ./elastic-ctl.sh start`
 
+You can also pass a specific version:
+
+`$ ./elastic-ctl.sh start 7.2.0`
+
 To stop the stack:
 
 `$ ./elastic-ctl.sh stop`
 
-## Serviços
+## Services
 
 - elasticsearch
 - logstash
