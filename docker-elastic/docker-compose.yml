@@ -2,7 +2,8 @@ version: '3.5'
 
 services:
   elasticsearch:
-    container_name: ffknob_elasticsearch
+    container_name: elasticsearch_$ELASTIC_VERSION
+    image: elasticsearch:$ELASTIC_VERSION
     build:
       context: elasticsearch/
       args:
@@ -38,7 +39,8 @@ services:
 #      - elasticsearch
 
   kibana:
-    container_name: ffknob_kibana
+    container_name: kibana_$ELASTIC_VERSION
+    image: kibana:$ELASTIC_VERSION
     build:
       context: kibana/
       args:

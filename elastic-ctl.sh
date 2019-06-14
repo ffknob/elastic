@@ -42,10 +42,12 @@ build() {
 
 start() {
 	cd docker-elastic/
+	docker-compose stop
 	if [ -z "${1}" ]
 	then
 		docker-compose up -d
 	else
+		ELASTIC_VERSION=${1} docker-compose down
 		ELASTIC_VERSION=${1} docker-compose up -d
 	fi
 }
