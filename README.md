@@ -1,7 +1,5 @@
 # Elastic Stack
 
-Version: 6.5.0
-
 ## Configuration
 
 ### Logstash
@@ -28,7 +26,7 @@ Version: 6.5.0
 
 To install all the configuration files into the containers:
  
-`$ ./elastic-ctl.sh install`
+`$ ./elastic-ctl.sh install 7.2.0`
 
 ## Build
 
@@ -44,7 +42,7 @@ You can also pass a specific version:
 
 To start the stack:
 
-`$ ./elastic-ctl.sh start`
+`$ ./elastic-ctl.sh start 7.2.0`
 
 You can also pass a specific version:
 
