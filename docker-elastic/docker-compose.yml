@@ -10,6 +10,7 @@ services:
         - ELASTIC_VERSION=$ELASTIC_VERSION
     volumes:
       - ./elasticsearch/config/elasticsearch-$ELASTIC_VERSION.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ./elasticsearch/config/analysis:/usr/share/elasticsearch/config/analysis:ro
       - elasticsearch_data:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
