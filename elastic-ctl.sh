@@ -72,7 +72,7 @@ fi
 
 case "${1}" in
 	"install")
-		install
+		install ${2}
 		;;
 	"build")
 		build ${2}
