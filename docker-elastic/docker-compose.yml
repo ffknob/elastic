@@ -19,7 +19,7 @@ services:
     networks:
       - elastic 
 
-#  logstash:
+      #  logstash:
 #    container_name: ffknob_logstash
 #    build:
 #      context: logstash/
@@ -49,6 +49,22 @@ services:
       - ./kibana/config/kibana-$ELASTIC_VERSION.yml:/usr/share/kibana/config/kibana.yml:ro
     ports:
       - "5601:5601"
+    networks:
+      - elastic
+    depends_on:
+      - elasticsearch
+
+  apm-server:
+    container_name: apm-server_$ELASTIC_VERSION
+    image: apm-server:$ELASTIC_VERSION
+    build:
+      context: apm-server/
+      args:
+        - ELASTIC_VERSION=$ELASTIC_VERSION
+    volumes:
+      - ./apm-server/config/apm-server-$ELASTIC_VERSION.yml:/usr/share/apm-server/apm-server.yml:ro
+    ports:
+      - "8200:8200"
     networks:
       - elastic
     depends_on:

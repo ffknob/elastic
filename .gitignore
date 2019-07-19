@@ -1,3 +1,13 @@
-docker-elastic/elasticsearch/data/
-docker-elastic/logstash/config/pipeline/tcers*.yml
+docker-elastic/elasticsearch/config/*.yml
+
+docker-elastic/logstash/config/*.yml
+docker-elastic/logstash/pipeline/*.yml
+
+docker-elastic/kibana/config/*.yml
+
+docker-elastic/apm-server/config/*.yml
+
+docker-elastic/beats/filebeat/*
+docker-elastic/beats/metricbeat/*
 docker-elastic/beats/heartbeat/heartbeats/*
+
