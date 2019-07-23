@@ -137,7 +137,7 @@ services:
 #     - elasticsearch
 
   appsearch:
-    container_name: apm-server_$ELASTIC_VERSION
+    container_name: app-search_$ELASTIC_VERSION
     image: app-search:$ELASTIC_VERSION
     build:
       context: app-search/

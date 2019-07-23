@@ -11,3 +11,4 @@ docker-elastic/beats/filebeat/*
 docker-elastic/beats/metricbeat/*
 docker-elastic/beats/heartbeat/heartbeats/*
 
+docker-elastic/app-search/config/*.yml
