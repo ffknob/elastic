@@ -1,1 +1,2 @@
 elasticsearch.host: http://elasticsearch:9200
+allow_es_settings_modification: true

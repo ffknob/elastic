@@ -136,7 +136,7 @@ services:
 #   depends_on:
 #     - elasticsearch
 
-  appsearch:
+  app-search:
     container_name: app-search_$ELASTIC_VERSION
     image: app-search:$ELASTIC_VERSION
     build:
@@ -146,8 +146,6 @@ services:
     volumes:
       - ./app-search/config/app-search-$ELASTIC_VERSION.yml:/usr/share/app-search/app-search.yml:ro
     environment:
-      - "elasticsearch.host=http://elasticsearch:9200"
-      - "allow_es_settings_modification=true"
       - "JAVA_OPTS=-Xmx256m"
     ports:
       - 3002:3002
