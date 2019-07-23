@@ -36,6 +36,10 @@ install() {
 	# Heartbeat
 	echo "Installing Heartbeat's configuration files..."
 	cp -f config/beats/heartbeat/heartbeats/*.yml docker-elastic/beats/heartbeat/heartbeats/ 2> /dev/null
+
+	# App Search
+	echo "Installing AppSearch's configuration files..."
+	cp -f config/app-search/app-search.yml docker-elastic/app-search/config/app-search-${1}.yml 2> /dev/null
 }
 
 build() {
