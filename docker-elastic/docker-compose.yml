@@ -13,7 +13,7 @@ services:
       - ./elasticsearch/config/analysis:/usr/share/elasticsearch/config/analysis:ro
       - elasticsearch_data:/usr/share/elasticsearch/data
     ports:
-      - "9200:9200"
+      - 9200:9200
     environment:
       ES_JAVA_OPTS: "-Xmx1g -Xms1g"
     networks:
@@ -48,7 +48,7 @@ services:
     volumes:
       - ./kibana/config/kibana-$ELASTIC_VERSION.yml:/usr/share/kibana/config/kibana.yml:ro
     ports:
-      - "5601:5601"
+      - 5601:5601
     networks:
       - elastic
     depends_on:
@@ -64,7 +64,7 @@ services:
     volumes:
       - ./apm-server/config/apm-server-$ELASTIC_VERSION.yml:/usr/share/apm-server/apm-server.yml:ro
     ports:
-      - "8200:8200"
+      - 8200:8200
     networks:
       - elastic
     depends_on:
@@ -136,6 +136,24 @@ services:
 #     - elastic
 #   depends_on:
 #     - elasticsearch
+
+  app-search:
+    container_name: app-search_$ELASTIC_VERSION
+    image: app-search:$ELASTIC_VERSION
+    build:
+      context: app-search/
+      args:
+        - ELASTIC_VERSION=$ELASTIC_VERSION
+    volumes:
+      - ./app-search/config/app-search-$ELASTIC_VERSION.yml:/usr/share/app-search/app-search.yml:ro
+    environment:
+      - "JAVA_OPTS=-Xmx256m"
+    ports:
+      - 3002:3002
+    networks:
+      - elastic
+    depends_on:
+      - elasticsearch
 
 networks:
   elastic:

@@ -36,6 +36,10 @@ install() {
 	# Heartbeat
 	echo "Installing Heartbeat's configuration files..."
 	cp -f config/beats/heartbeat/heartbeats/*.yml docker-elastic/beats/heartbeat/heartbeats/ 2> /dev/null
+
+	# App Search
+	echo "Installing AppSearch's configuration files..."
+	cp -f config/app-search/app-search.yml docker-elastic/app-search/config/app-search-${1}.yml 2> /dev/null
 }
 
 build() {
@@ -50,9 +54,9 @@ build() {
 
 start() {
 	cd docker-elastic/
-	docker-compose stop
 	if [ -z "${1}" ]
 	then
+		docker-compose stop
 		docker-compose up -d
 	else
 		ELASTIC_VERSION=${1} docker-compose down
@@ -62,7 +66,12 @@ start() {
 
 stop() {
 	cd docker-elastic/
-	docker-compose down
+	if [ -z "${1}" ]
+	then
+		docker-compose down
+	else
+		ELASTIC_VERSION=${1} docker-compose down
+	fi
 }
 
 if [ $# -eq 0 ]
