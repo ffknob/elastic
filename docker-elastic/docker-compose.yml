@@ -19,7 +19,7 @@ services:
     networks:
       - elastic 
 
-      #  logstash:
+#  logstash:
 #    container_name: ffknob_logstash
 #    build:
 #      context: logstash/
@@ -70,7 +70,7 @@ services:
     depends_on:
       - elasticsearch
 
-  # Métricas de serviços
+# Métricas de serviços
 #  metricbeat:
 #    container_name: ffknob_metricbeat
 #    build:
@@ -91,8 +91,8 @@ services:
 #    networks:
 #      - elastic
 
-  # Métricas do Docker host
-  # Como não tem acesso à rede do Docker, acessa os serviços pelos IPs e portas expostos 
+# Métricas do Docker host
+# Como não tem acesso à rede do Docker, acessa os serviços pelos IPs e portas expostos 
 #  metricbeat-host:
 #    container_name: ffknob_metricbeat-host
 #    build:
@@ -137,23 +137,23 @@ services:
 #   depends_on:
 #     - elasticsearch
 
-  app-search:
-    container_name: app-search_$ELASTIC_VERSION
-    image: app-search:$ELASTIC_VERSION
-    build:
-      context: app-search/
-      args:
-        - ELASTIC_VERSION=$ELASTIC_VERSION
-    volumes:
-      - ./app-search/config/app-search-$ELASTIC_VERSION.yml:/usr/share/app-search/app-search.yml:ro
-    environment:
-      - "JAVA_OPTS=-Xmx256m"
-    ports:
-      - 3002:3002
-    networks:
-      - elastic
-    depends_on:
-      - elasticsearch
+#  app-search:
+#    container_name: app-search_$ELASTIC_VERSION
+#    image: app-search:$ELASTIC_VERSION
+#    build:
+#      context: app-search/
+#      args:
+#        - ELASTIC_VERSION=$ELASTIC_VERSION
+#    volumes:
+#      - ./app-search/config/app-search-$ELASTIC_VERSION.yml:/usr/share/app-search/app-search.yml:ro
+#    environment:
+#      - "JAVA_OPTS=-Xmx256m"
+#    ports:
+#      - 3002:3002
+#    networks:
+#      - elastic
+#    depends_on:
+#      - elasticsearch
 
 networks:
   elastic:
