@@ -1,23 +1,183 @@
 version: '3.5'
 
 services:
-  elasticsearch:
-    container_name: elasticsearch_$ELASTIC_VERSION
-    image: elasticsearch:$ELASTIC_VERSION
-    build:
-      context: elasticsearch/
-      args:
-        - ELASTIC_VERSION=$ELASTIC_VERSION
+  elasticsearch_certificates:
+    container_name: elasticsearch_certificates
+    image: docker.elastic.co/elasticsearch/elasticsearch:$ELASTIC_VERSION
+    environment:
+      CA_PASSWORD: $CA_PASSWORD
+      ELASTICSEARCH01_CERT_PASSWORD: $ELASTICSEARCH01_CERT_PASSWORD
+      ELASTICSEARCH02_CERT_PASSWORD: $ELASTICSEARCH02_CERT_PASSWORD
+      ELASTICSEARCH03_CERT_PASSWORD: $ELASTICSEARCH03_CERT_PASSWORD
+      KIBANA_CERT_PASSWORD: $KIBANA_CERT_PASSWORD
+    command: >
+      bash -c '
+        if [[ ! -f /certs/elasticsearch01.p12 || \
+              ! -f /certs/elasticsearch02.p12 || \
+              ! -f /certs/elasticsearch03.p12 || \
+              ! -f /certs/kibana.zip ]]; then
+          echo "Removing certificates" &&
+          rm -rf /certs/* &&
+          
+          echo "Generating CA" &&
+          bin/elasticsearch-certutil ca --silent --pass ${CA_PASSWORD} --pem --out /certs/ca.zip &&
+          unzip /certs/ca.zip -d /certs &&
+          
+          echo "Generating certificate for Elasticsearch01" &&
+          bin/elasticsearch-certutil cert --silent --ca-cert /certs/ca/ca.crt --ca-key /certs/ca/ca.key --ca-pass ${CA_PASSWORD} --pass ${ELASTICSEARCH01_CERT_PASSWORD} --dns elasticsearch01 --out /certs/elasticsearch01.p12 &&
+          
+          echo "Generating certificate for Elasticsearch02" &&
+          bin/elasticsearch-certutil cert --silent --ca-cert /certs/ca/ca.crt --ca-key /certs/ca/ca.key --ca-pass ${CA_PASSWORD} --pass ${ELASTICSEARCH02_CERT_PASSWORD} --dns elasticsearch02 --out /certs/elasticsearch02.p12 &&
+          
+          echo "Generating certificate for Elasticsearch03" &&
+          bin/elasticsearch-certutil cert --silent --ca-cert /certs/ca/ca.crt --ca-key /certs/ca/ca.key --ca-pass ${CA_PASSWORD} --pass ${ELASTICSEARCH02_CERT_PASSWORD} --dns elasticsearch03 --out /certs/elasticsearch03.p12 &&
+          
+          echo "Generating certificate for Kibana" &&
+          bin/elasticsearch-certutil cert --silent --ca-cert /certs/ca/ca.crt --ca-key /certs/ca/ca.key --ca-pass ${CA_PASSWORD} --pass ${KIBANA_CERT_PASSWORD} --pem --dns kibana --out /certs/kibana.zip &&
+          unzip /certs/kibana.zip -d /certs &&
+          mv /certs/instance/instance.crt /certs/kibana.crt &&
+          mv /certs/instance/instance.key /certs/kibana.key &&
+          rm -rf /certs/instance &&
+          
+          chown -R 1000:0 /certs
+        fi;
+      '
+    user: "0"
+    working_dir: /usr/share/elasticsearch
+    volumes: 
+      - certs:/certs
+
+  elasticsearch01:
+    container_name: elasticsearch01_$ELASTIC_VERSION
+    image: docker.elastic.co/elasticsearch/elasticsearch:$ELASTIC_VERSION
     volumes:
-      - ./elasticsearch/config/elasticsearch-$ELASTIC_VERSION.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-      - ./elasticsearch/config/analysis:/usr/share/elasticsearch/config/analysis:ro
-      - elasticsearch_data:/usr/share/elasticsearch/data
+      - certs:/usr/share/elasticsearch/config/certs/:ro
+      - elasticsearch01_data:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
     environment:
-      ES_JAVA_OPTS: "-Xmx1g -Xms1g"
+      - "ES_JAVA_OPTS=-Xmx1g -Xms1g"
+      - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
+      - node.name=elasticsearch01
+      - cluster.name=elasticsearch-cluster
+      - network.host=_site_
+      - discovery.seed_hosts=elasticsearch02,elasticsearch03
+      - cluster.initial_master_nodes=elasticsearch01,elasticsearch02,elasticsearch03
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
+      - xpack.security.authc.token.enabled=true
+      - xpack.security.audit.enabled=true
+      - xpack.security.authc.realms.file.file1.order=0
+      - xpack.security.authc.realms.native.native1.order=1
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.keystore.password=$ELASTICSEARCH01_CERT_PASSWORD
+      - xpack.security.transport.ssl.truststore.password=$ELASTICSEARCH01_CERT_PASSWORD
+      - xpack.security.transport.ssl.keystore.path=certs/elasticsearch01.p12
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.keystore.password=$ELASTICSEARCH01_CERT_PASSWORD
+      - xpack.security.http.ssl.truststore.password=$ELASTICSEARCH01_CERT_PASSWORD
+      - xpack.security.http.ssl.keystore.path=certs/elasticsearch01.p12    
+      - xpack.security.http.ssl.verification_mode=certificate
+      - xpack.license.self_generated.type=trial
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1      
     networks:
-      - elastic 
+      - elastic
+    healthcheck:
+      test: [
+        "CMD", "test", 
+        "-f", "/certs/elasticsearch01.p12", "-a",
+        "-f", "/certs/elasticsearch02.p12", "-a",
+        "-f", "/certs/elasticsearch03.p12", "-a",
+        "-f", "/certs/kibana.crt", "-a",
+        "-f", "/certs/kibana.key"
+      ]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+
+  elasticsearch02:
+    container_name: elasticsearch02_$ELASTIC_VERSION
+    image: docker.elastic.co/elasticsearch/elasticsearch:$ELASTIC_VERSION
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs/:ro
+      - elasticsearch02_data:/usr/share/elasticsearch/data
+    environment:
+      - "ES_JAVA_OPTS=-Xmx1g -Xms1g"
+      - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
+      - node.name=elasticsearch02
+      - cluster.name=elasticsearch-cluster
+      - network.host=_site_
+      - discovery.seed_hosts=elasticsearch01,elasticsearch03
+      - cluster.initial_master_nodes=elasticsearch01,elasticsearch02,elasticsearch03
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
+      - xpack.security.authc.token.enabled=true
+      - xpack.security.audit.enabled=true
+      - xpack.security.authc.realms.file.file1.order=0
+      - xpack.security.authc.realms.native.native1.order=1
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.keystore.password=$ELASTICSEARCH02_CERT_PASSWORD
+      - xpack.security.transport.ssl.truststore.password=$ELASTICSEARCH02_CERT_PASSWORD
+      - xpack.security.transport.ssl.keystore.path=certs/elasticsearch01.p12
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.keystore.password=$ELASTICSEARCH02_CERT_PASSWORD
+      - xpack.security.http.ssl.truststore.password=$ELASTICSEARCH02_CERT_PASSWORD
+      - xpack.security.http.ssl.keystore.path=certs/elasticsearch01.p12
+      - xpack.security.http.ssl.verification_mode=certificate
+      - xpack.license.self_generated.type=trial
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1      
+    networks:
+      - elastic
+    depends_on:
+      - elasticsearch01
+
+  elasticsearch03:
+    container_name: elasticsearch03_$ELASTIC_VERSION
+    image: docker.elastic.co/elasticsearch/elasticsearch:$ELASTIC_VERSION
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs/:ro
+      - elasticsearch03_data:/usr/share/elasticsearch/data
+    environment:
+      - "ES_JAVA_OPTS=-Xmx1g -Xms1g"
+      - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
+      - node.name=elasticsearch03
+      - cluster.name=elasticsearch-cluster
+      - network.host=_site_
+      - discovery.seed_hosts=elasticsearch01,elasticsearch02
+      - cluster.initial_master_nodes=elasticsearch01,elasticsearch02,elasticsearch03
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
+      - xpack.security.authc.token.enabled=true
+      - xpack.security.audit.enabled=true
+      - xpack.security.authc.realms.file.file1.order=0
+      - xpack.security.authc.realms.native.native1.order=1
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.keystore.password=$ELASTICSEARCH03_CERT_PASSWORD
+      - xpack.security.transport.ssl.truststore.password=$ELASTICSEARCH03_CERT_PASSWORD
+      - xpack.security.transport.ssl.keystore.path=certs/elasticsearch01.p12
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.keystore.password=$ELASTICSEARCH03_CERT_PASSWORD
+      - xpack.security.http.ssl.truststore.password=$ELASTICSEARCH03_CERT_PASSWORD
+      - xpack.security.http.ssl.keystore.path=certs/elasticsearch01.p12
+      - xpack.security.http.ssl.verification_mode=certificate
+      - xpack.license.self_generated.type=trial
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1      
+    networks:
+      - elastic
+    depends_on:
+      - elasticsearch01
 
 #  logstash:
 #    container_name: ffknob_logstash
@@ -36,39 +196,46 @@ services:
 #    networks:
 #      - elastic
 #    depends_on:
-#      - elasticsearch
+#      - elasticsearch01
 
   kibana:
     container_name: kibana_$ELASTIC_VERSION
-    image: kibana:$ELASTIC_VERSION
-    build:
-      context: kibana/
-      args:
-        - ELASTIC_VERSION=$ELASTIC_VERSION
+    image: docker.elastic.co/kibana/kibana:$ELASTIC_VERSION
     volumes:
-      - ./kibana/config/kibana-$ELASTIC_VERSION.yml:/usr/share/kibana/config/kibana.yml:ro
+      - certs:/usr/share/kibana/config/certs/:ro
     ports:
       - 5601:5601
+    environment:
+      - ELASTICSEARCH_HOSTS=["https://elasticsearch01:9200","https://elasticsearch02:9200","https://elasticsearch03:9200"]
+      - XPACK_SECURITY_ENABLED=true
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
+      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
+      - ELASTICSEARCH_SSL_VERIFICATIONMODE=certificate
+      - SERVER_SSL_ENABLED=true
+      - SERVER_SSL_KEY=config/certs/kibana.key
+      - SERVER_SSL_CERTIFICATE=config/certs/kibana.crt
+      - SERVER_SSL_PASSWORD=${KIBANA_CERT_PASSWORD}
+      #- xpack.monitoring.elasticsearch.ssl.verificationMode=certificate
     networks:
       - elastic
     depends_on:
-      - elasticsearch
+      - elasticsearch01
 
-  apm-server:
-    container_name: apm-server_$ELASTIC_VERSION
-    image: apm-server:$ELASTIC_VERSION
-    build:
-      context: apm-server/
-      args:
-        - ELASTIC_VERSION=$ELASTIC_VERSION
-    volumes:
-      - ./apm-server/config/apm-server-$ELASTIC_VERSION.yml:/usr/share/apm-server/apm-server.yml:ro
-    ports:
-      - 8200:8200
-    networks:
-      - elastic
-    depends_on:
-      - elasticsearch
+#  apm-server:
+#    container_name: apm-server_$ELASTIC_VERSION
+#    image: docker.elastic.co/apm/apm-server:$ELASTIC_VERSION
+#    volumes:
+#      - ./apm-server/config/apm-server-$ELASTIC_VERSION.yml:/usr/share/apm-server/apm-server.yml:ro
+#    ports:
+#      - 8200:8200
+#    environment:
+#      apm-server.host: apm-server:8200
+#      output.elasticsearch.hosts: elasticsearch01:9200
+#    networks:
+#      - elastic
+#    depends_on:
+#      - elasticsearch01
 
 # Métricas de serviços
 #  metricbeat:
@@ -159,5 +326,13 @@ networks:
   elastic:
 
 volumes:
-  elasticsearch_data:
-    name: elasticsearch_data_$ELASTIC_VERSION
+  certs:
+
+  elasticsearch01_data:
+    name: elasticsearch01_data_$ELASTIC_VERSION
+  
+  elasticsearch02_data:
+    name: elasticsearch02_data_$ELASTIC_VERSION
+  
+  elasticsearch03_data:
+    name: elasticsearch03_data_$ELASTIC_VERSION    

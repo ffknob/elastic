@@ -2,44 +2,12 @@
 
 use() {
 
-	echo "${0} install|build [ELASTIC_VERSION]|start [ELASTIC_VERSION]|stop"
-	echo "	install		installs configuration files for the containers"
+	echo "${0} build [ELASTIC_VERSION]|start [ELASTIC_VERSION]|stop"
+	echo "	build		builds the containers"
 	echo "	start		starts the stack"
 	echo "	stop		stops the stack"
 
 	exit -1
-}
-
-install() {
-	# Elasticsearch
-	echo "Installing Elasticsearch's configuration files..."
-	cp -f config/elasticsearch/elasticsearch.yml docker-elastic/elasticsearch/config/elasticsearch-${1}.yml 2> /dev/null
-
-	# Logstash
-	echo "Installing Logstash's configuration files..."
-	cp -f config/logstash/logstash.yml docker-elastic/logstash/config/logstash-${1}.yml 2> /dev/null
-	#cp -f config/logstash/pipeline/*.yml docker-elastic/logstash/pipeline/ 2> /dev/null
-
-	# Kibana
-	echo "Installing Kibana's configuration files..."
-	cp -f config/kibana/kibana.yml docker-elastic/kibana/config/kibana-${1}.yml 2> /dev/null
-
-	# APM server
-	echo "Installing APM's server configuration files..."
-	cp -f config/apm-server/apm-server.yml docker-elastic/apm-server/config/apm-server-${1}.yml 2> /dev/null
-
-	# Metricbeat
-	echo "Installing Metricbeat's configuration files..."
-	cp -f config/beats/metricbeat/metricbeat.yml docker-elastic/beats/metricbeat/config/metricbeat-${1}.yml 2> /dev/null
-	cp -f config/beats/metricbeat/metricbeat-host.yml docker-elastic/beats/metricbeat/config/metricbeat-host-${1}.yml 2> /dev/null
-
-	# Heartbeat
-	echo "Installing Heartbeat's configuration files..."
-	cp -f config/beats/heartbeat/heartbeats/*.yml docker-elastic/beats/heartbeat/heartbeats/ 2> /dev/null
-
-	# App Search
-	echo "Installing AppSearch's configuration files..."
-	cp -f config/app-search/app-search.yml docker-elastic/app-search/config/app-search-${1}.yml 2> /dev/null
 }
 
 build() {
