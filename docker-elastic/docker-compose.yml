@@ -3,7 +3,11 @@ version: "3.5"
 services:
   elasticsearch_bootstrap:
     container_name: elasticsearch_bootstrap
-    image: docker.elastic.co/elasticsearch/elasticsearch:$ELASTIC_VERSION
+    image: ffknob.com.br/elasticsearch:$ELASTIC_VERSION
+    build:
+      context: elasticsearch/
+      args:
+        - ELASTIC_VERSION=$ELASTIC_VERSION
     environment:
       - node.name=elasticsearch_bootstrap
       - cluster.name=elasticsearch-cluster
@@ -21,107 +25,21 @@ services:
       - ELASTICSEARCH02_CERT_PASSWORD=$ELASTICSEARCH02_CERT_PASSWORD
       - ELASTICSEARCH03_CERT_PASSWORD=$ELASTICSEARCH03_CERT_PASSWORD
       - KIBANA_CERT_PASSWORD=$KIBANA_CERT_PASSWORD
-    command: >
-      bash -c '
-        if [[ ! -f /shared/certfificates.ready ]]; then
-          echo "[Generating CA]"
-          bin/elasticsearch-certutil ca --silent --pass ${CA_PASSWORD} --pem --out /certs/ca.zip
-          unzip /certs/ca.zip -d /certs
-
-          echo "[Generating certificate for Elasticsearch01]"
-          bin/elasticsearch-certutil cert --silent --ca-cert /certs/ca/ca.crt --ca-key /certs/ca/ca.key --ca-pass ${CA_PASSWORD} --pass ${ELASTICSEARCH01_CERT_PASSWORD} --dns elasticsearch01 --out /certs/elasticsearch01.p12
-
-          echo "[Generating certificate for Elasticsearch02]"
-          bin/elasticsearch-certutil cert --silent --ca-cert /certs/ca/ca.crt --ca-key /certs/ca/ca.key --ca-pass ${CA_PASSWORD} --pass ${ELASTICSEARCH02_CERT_PASSWORD} --dns elasticsearch02 --out /certs/elasticsearch02.p12
-
-          echo "[Generating certificate for Elasticsearch03]"
-          bin/elasticsearch-certutil cert --silent --ca-cert /certs/ca/ca.crt --ca-key /certs/ca/ca.key --ca-pass ${CA_PASSWORD} --pass ${ELASTICSEARCH02_CERT_PASSWORD} --dns elasticsearch03 --out /certs/elasticsearch03.p12
-
-          echo "[Generating certificate for Kibana]"
-          bin/elasticsearch-certutil cert --silent --ca-cert /certs/ca/ca.crt --ca-key /certs/ca/ca.key --ca-pass ${CA_PASSWORD} --pass ${KIBANA_CERT_PASSWORD} --pem --dns kibana --out /certs/kibana.zip
-          unzip /certs/kibana.zip -d /certs
-          mv /certs/instance/instance.crt /certs/kibana.crt
-          mv /certs/instance/instance.key /certs/kibana.key
-          rm -rf /certs/instance
-
-          chown -R 1000:0 /certs
-
-          touch /shared/certificates.ready
-      fi;
-
-      if [[ ! -f /shared/built_in_users.ready ]]; then
-          echo "[Bringing Elasticsearch up]"
-          ./bin/elasticsearch -d -p pid
-
-          curl -s -o /shared/elasticsearch_startup.status https://localhost:9200/_cluster/health\?filter_path\=timed_out\&timeout\=30s\&wait_for_nodes\=1 -k -u elastic:${ELASTIC_USER_PASSWORD}
-
-          ELASTICSEARCH_STARTUP_TIMED_OUT=`cat /shared/elasticsearch_startup.status | grep true > /dev/null`
-          if [[ ${ELASTICSEARCH_STARTUP_TIMED_OUT} -eq 0 ]]; then
-            echo "Elasticsearch did not came up after 30 seconds. Aborting."
-            exit -1
-          fi
-
-          echo "[Creating keystore]"
-          ./bin/elasticsearch-keystore create
-
-          echo "[Adding elastic user bootstrap password]"
-          echo ${ELASTIC_USER_PASSWORD} | ./bin/elasticsearch-keystore add --stdin bootstrap.password
-
-          echo "[Setting elastic user password]"
-          curl -XPOST -H"Content-type: application/json" https://localhost:9200/_security/user/elastic/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${ELASTIC_USER_PASSWORD}'"}'
-
-          echo "[Setting kibana user password]"
-          curl -XPOST -H"Content-type: application/json" https://localhost:9200/_security/user/kibana/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${KIBANA_USER_PASSWORD}'"}'
-
-          echo "[Setting logstash_system user password]"
-          curl -XPOST -H"Content-type: application/json" https://localhost:9200/_security/user/logstash_system/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${LOGSTASH_SYSTEM_USER_PASSWORD}'"}'
-
-          echo "[Setting beats_system user password]"
-          curl -XPOST -H"Content-type: application/json" https://localhost:9200/_security/user/beats_ystem/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${BEATS_SYSTEM_USER_PASSWORD}'"}'
-
-          echo "[Setting apm_system user password]"
-          curl -XPOST -H"Content-type: application/json" https://localhost:9200/_security/user/apm_system/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${APM_SYSTEM_USER_PASSWORD}'"}'
-
-          echo "[Setting remote_monitoring_user user password]"
-          curl -XPOST -H"Content-type: application/json" https://localhost:9200/_security/user/remote_monitoring_user/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${REMOTE_MONITORING_USER_PASSWORD}'"}'
-
-          echo "[Bringing Elasticsearch down]"
-          kill -9 `cat pid`
-
-          touch /shared/built_in_users.ready
-        fi;
-
-        touch /shared/bootstrap.ready
-
-        sleep 600
-      '
+    command: /bootstrap.sh
     working_dir: /usr/share/elasticsearch
     user: "0"
     volumes:
       - shared:/shared
       - certs:/certs
       - elasticsearch01_data:/usr/share/elasticsearch/data
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "test",
-          "-f",
-          "/shared/certificates.ready",
-          "-a",
-          "-f",
-          "/shared/built_in_users.ready",
-          "-a",
-          "-f",
-          "/shared/bootstrap.ready"
-        ]
-      interval: 5s
-      timeout: 10s
-      retries: 10
 
   elasticsearch01:
     container_name: elasticsearch01_$ELASTIC_VERSION
-    image: docker.elastic.co/elasticsearch/elasticsearch:$ELASTIC_VERSION
+    image: ffknob.com.br/elasticsearch:$ELASTIC_VERSION
+    build:
+      context: elasticsearch/
+      args:
+        - ELASTIC_VERSION=$ELASTIC_VERSION
     volumes:
       - shared:/shared
       - certs:/usr/share/elasticsearch/config/certs/:ro
@@ -165,7 +83,11 @@ services:
 
   elasticsearch02:
     container_name: elasticsearch02_$ELASTIC_VERSION
-    image: docker.elastic.co/elasticsearch/elasticsearch:$ELASTIC_VERSION
+    image: ffknob.com.br/elasticsearch:$ELASTIC_VERSION
+    build:
+      context: elasticsearch/
+      args:
+        - ELASTIC_VERSION=$ELASTIC_VERSION
     volumes:
       - shared:/shared
       - certs:/usr/share/elasticsearch/config/certs/:ro
@@ -207,7 +129,11 @@ services:
 
   elasticsearch03:
     container_name: elasticsearch03_$ELASTIC_VERSION
-    image: docker.elastic.co/elasticsearch/elasticsearch:$ELASTIC_VERSION
+    image: ffknob.com.br/elasticsearch:$ELASTIC_VERSION
+    build:
+      context: elasticsearch/
+      args:
+        - ELASTIC_VERSION=$ELASTIC_VERSION
     volumes:
       - shared:/shared
       - certs:/usr/share/elasticsearch/config/certs/:ro
@@ -249,7 +175,7 @@ services:
 
   #  logstash:
   #    container_name: ffknob_logstash
-  #    build:207a1f6ee79c
+  #    build:
   #      context: logstash/
   #      args:
   #        - ELASTIC_VERSION=$ELASTIC_VERSION
@@ -268,7 +194,11 @@ services:
 
   kibana:
     container_name: kibana_$ELASTIC_VERSION
-    image: docker.elastic.co/kibana/kibana:$ELASTIC_VERSION
+    image: ffknob.com.br/kibana:$ELASTIC_VERSION
+    build:
+      context: kibana/
+      args:
+        - ELASTIC_VERSION=$ELASTIC_VERSION
     volumes:
       - shared:/shared
       - certs:/usr/share/kibana/config/certs/:ro
