@@ -3,7 +3,7 @@
 set -e
 
 CMD="$@"
-ELASTICSEARCH_BOOTSTRAP_READY_FILE=/shared/bootstrap.ready
+ELASTICSEARCH_BOOTSTRAP_READY_FILE=/shared/bootstrap/bootstrap.ready
 
 if [[ ! -f ${ELASTICSEARCH_BOOTSTRAP_READY_FILE} ]]
 then

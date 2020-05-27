@@ -55,7 +55,7 @@ services:
       - discovery.seed_hosts=elasticsearch02,elasticsearch03
       - cluster.initial_master_nodes=elasticsearch01,elasticsearch02,elasticsearch03
       - bootstrap.memory_lock=true
-      - xpack.monitoring.collection.enabled=true
+      - xpack.monitoring.elasticsearch.collection.enabled=true
       - xpack.security.enabled=true
       - xpack.security.authc.token.enabled=true
       - xpack.security.audit.enabled=true
@@ -101,7 +101,7 @@ services:
       - discovery.seed_hosts=elasticsearch01,elasticsearch03
       - cluster.initial_master_nodes=elasticsearch01,elasticsearch02,elasticsearch03
       - bootstrap.memory_lock=true
-      - xpack.monitoring.collection.enabled=true
+      - xpack.monitoring.elasticsearch.collection.enabled=true
       - xpack.security.enabled=true
       - xpack.security.authc.token.enabled=true
       - xpack.security.audit.enabled=true
@@ -147,7 +147,7 @@ services:
       - discovery.seed_hosts=elasticsearch01,elasticsearch02
       - cluster.initial_master_nodes=elasticsearch01,elasticsearch02,elasticsearch03
       - bootstrap.memory_lock=true
-      - xpack.monitoring.collection.enabled=true
+      - xpack.monitoring.elasticsearch.collection.enabled=true
       - xpack.security.enabled=true
       - xpack.security.authc.token.enabled=true
       - xpack.security.audit.enabled=true
