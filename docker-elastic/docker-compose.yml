@@ -48,12 +48,11 @@ services:
       - 9200:9200
     environment:
       - "ES_JAVA_OPTS=-Xmx1g -Xms1g"
-      - ELASTIC_USER_PASSWORD=$ELASTIC_USER_PASSWORD
       - node.name=elasticsearch01
       - cluster.name=elasticsearch-cluster
       - network.host=_site_
       - discovery.seed_hosts=elasticsearch02,elasticsearch03
-      - cluster.initial_master_nodes=elasticsearch01,elasticsearch02,elasticsearch03
+      - cluster.initial_master_nodes=elasticsearch01
       - bootstrap.memory_lock=true
       - xpack.monitoring.elasticsearch.collection.enabled=true
       - xpack.security.enabled=true
@@ -94,12 +93,11 @@ services:
       - elasticsearch02_data:/usr/share/elasticsearch/data
     environment:
       - "ES_JAVA_OPTS=-Xmx1g -Xms1g"
-      - ELASTIC_USER_PASSWORD=$ELASTIC_USER_PASSWORD
       - node.name=elasticsearch02
       - cluster.name=elasticsearch-cluster
       - network.host=_site_
       - discovery.seed_hosts=elasticsearch01,elasticsearch03
-      - cluster.initial_master_nodes=elasticsearch01,elasticsearch02,elasticsearch03
+      - cluster.initial_master_nodes=elasticsearch01
       - bootstrap.memory_lock=true
       - xpack.monitoring.elasticsearch.collection.enabled=true
       - xpack.security.enabled=true
@@ -140,12 +138,11 @@ services:
       - elasticsearch03_data:/usr/share/elasticsearch/data
     environment:
       - "ES_JAVA_OPTS=-Xmx1g -Xms1g"
-      - ELASTIC_USER_PASSWORD=$ELASTIC_USER_PASSWORD
       - node.name=elasticsearch03
       - cluster.name=elasticsearch-cluster
       - network.host=_site_
       - discovery.seed_hosts=elasticsearch01,elasticsearch02
-      - cluster.initial_master_nodes=elasticsearch01,elasticsearch02,elasticsearch03
+      - cluster.initial_master_nodes=elasticsearch01
       - bootstrap.memory_lock=true
       - xpack.monitoring.elasticsearch.collection.enabled=true
       - xpack.security.enabled=true

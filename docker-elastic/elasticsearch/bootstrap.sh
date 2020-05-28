@@ -1,4 +1,7 @@
 #!/bin/bash
+if [[ -f /shared/bootstrap/bootstrap.ready ]]; then
+  exit
+fi
 
 mkdir -p /shared/bootstrap/
 
@@ -81,37 +84,37 @@ if [[ ! -f /shared/built_in_users.ready ]]; then
 
   if [[ ! -f /shared/bootstrap/built-in_users-elastic.ready ]]; then
     echo "Setting elastic user password"
-    curl -s -XPOST -H"Content-type: application/json" http://localhost:9200/_security/user/elastic/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${ELASTIC_USER_PASSWORD}'"}'
+    curl -s -o /dev/null -XPOST -H"Content-type: application/json" http://localhost:9200/_security/user/elastic/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${ELASTIC_USER_PASSWORD}'"}'
     touch /shared/bootstrap/built-in_users-elastic.ready
   fi
 
   if [[ ! -f /shared/bootstrap/built-in_users-kibana.ready ]]; then
    echo "Setting kibana user password"
-    curl -s -XPOST -H"Content-type: application/json" http://localhost:9200/_security/user/kibana/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${KIBANA_USER_PASSWORD}'"}'
+    curl -s -o /dev/null -XPOST -H"Content-type: application/json" http://localhost:9200/_security/user/kibana/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${KIBANA_USER_PASSWORD}'"}'
     touch /shared/bootstrap/built-in_users-kibana-ready
   fi
 
   if [[ ! -f /shared/bootstrap/built-in_users-logstash_system.ready ]]; then
     echo "Setting logstash_system user password"
-    curl -s -XPOST -H"Content-type: application/json" http://localhost:9200/_security/user/logstash_system/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${LOGSTASH_SYSTEM_USER_PASSWORD}'"}'
+    curl -s -o /dev/null -XPOST -H"Content-type: application/json" http://localhost:9200/_security/user/logstash_system/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${LOGSTASH_SYSTEM_USER_PASSWORD}'"}'
     touch /shared/bootstrap/built-in_users-logstash_system.ready
   fi
 
   if [[ ! -f /shared/bootstrap/built-in_users-beats_system.ready ]]; then
     echo "Setting beats_system user password"
-    curl -s -XPOST -H"Content-type: application/json" http://localhost:9200/_security/user/beats_system/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${BEATS_SYSTEM_USER_PASSWORD}'"}'
+    curl -s -o /dev/null -XPOST -H"Content-type: application/json" http://localhost:9200/_security/user/beats_system/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${BEATS_SYSTEM_USER_PASSWORD}'"}'
     touch /shared/bootstrap/built-in_users-beat_system.ready
   fi
 
   if [[ ! -f /shared/bootstrap/built-in_users-apm_system.ready ]]; then
     echo "Setting apm_system user password"
-    curl -s -XPOST -H"Content-type: application/json" http://localhost:9200/_security/user/apm_system/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${APM_SYSTEM_USER_PASSWORD}'"}'
+    curl -s -o /dev/null -XPOST -H"Content-type: application/json" http://localhost:9200/_security/user/apm_system/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${APM_SYSTEM_USER_PASSWORD}'"}'
     touch /shared/bootstrap/built-in_users-apm_system.ready
   fi
 
   if [[ ! -f /shared/bootstrap/built-in_users-remote_monitoring_user.ready ]]; then
     echo "Setting remote_monitoring_user user password"
-    curl -XPOST -H"Content-type: application/json" http://localhost:9200/_security/user/remote_monitoring_user/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${REMOTE_MONITORING_USER_PASSWORD}'"}'
+    curl -s -o /dev/null -XPOST -H"Content-type: application/json" http://localhost:9200/_security/user/remote_monitoring_user/_password -k -u elastic:${ELASTIC_USER_PASSWORD} -d'{ "password": "'${REMOTE_MONITORING_USER_PASSWORD}'"}'
     touch /shared/bootstrap/built-in_users-remote_monitoring_user.ready
   fi
 

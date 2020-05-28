@@ -6,4 +6,4 @@ COPY wait-for-bootstrap.sh /
 
 USER elasticsearch
 
-CMD [ "/wait-for-bootstrap.sh", "eswrapper" ]
+CMD [ "/wait-for-bootstrap.sh", "/usr/local/bin/docker-entrypoint.sh" ]
